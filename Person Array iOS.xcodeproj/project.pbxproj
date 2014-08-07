@@ -14,7 +14,6 @@
 		7EC794171993FDC7006A054F /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC794161993FDC7006A054F /* Person.swift */; };
 		7EC7941B199409D0006A054F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7941A199409D0006A054F /* ViewController.swift */; };
 		7EC7941D19940EA2006A054F /* Roster.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC7941C19940EA2006A054F /* Roster.plist */; };
-		7EC7941F19941D5E006A054F /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EC7941E19941D5E006A054F /* README.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +38,6 @@
 		7EC794161993FDC7006A054F /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
 		7EC7941A199409D0006A054F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7EC7941C19940EA2006A054F /* Roster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Roster.plist; sourceTree = "<group>"; };
-		7EC7941E19941D5E006A054F /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				7EC7941A199409D0006A054F /* ViewController.swift */,
-				7EC7941E19941D5E006A054F /* README.txt */,
 				7EC793F91993FDB7006A054F /* AppDelegate.swift */,
 				7EC794161993FDC7006A054F /* Person.swift */,
 				7EC7941C19940EA2006A054F /* Roster.plist */,
@@ -198,7 +195,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EC7941F19941D5E006A054F /* README.txt in Resources */,
 				7EC793FF1993FDB7006A054F /* Main.storyboard in Resources */,
 				7EC7941D19940EA2006A054F /* Roster.plist in Resources */,
 				7EC794011993FDB7006A054F /* Images.xcassets in Resources */,
