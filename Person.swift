@@ -15,9 +15,16 @@ class Person{
     var lastName    : String
     var image       : UIImage?
     
-    init (firstName: String, lastName : String){
+    init(firstName: String, lastName : String){
         self.firstName = firstName
         self.lastName = lastName
+    }
+    
+    convenience init(fullName: String){
+    
+        var nameArray = fullName.componentsSeparatedByString(" ")
+        println(nameArray)
+        self.init(firstName: nameArray[0], lastName: nameArray[1])
     }
     
     func fullName() -> String {

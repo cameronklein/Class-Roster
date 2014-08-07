@@ -9,17 +9,42 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var personArray : [Person] = []
                             
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.initializePersonArray()
+        
+        for person in personArray{
+            println(person.fullName())
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    
+    
+    func initializePersonArray(){
+        
+        //Get property list
+        
+        let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
+        let dict = NSDictionary(contentsOfFile:path)
+        
+        var tempArray = dict["Roster"] as Array<String>
+        
+        for person in tempArray{
+            self.personArray.append(Person(fullName: person))
+        }
+    }
 
 }
 
