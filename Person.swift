@@ -23,7 +23,6 @@ class Person{
     convenience init(fullName: String){
     
         var nameArray = fullName.componentsSeparatedByString(" ")
-        println(nameArray)
         self.init(firstName: nameArray[0], lastName: nameArray[1])
     }
     
