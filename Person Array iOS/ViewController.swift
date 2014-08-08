@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var label: UILabel!
+    
     var personArray : [Person] = []
                             
     override func viewDidLoad() {
@@ -17,6 +19,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.initializePersonArray()
+        label.text = "\(personArray.count) people loaded from Roster.plist!"
         
         for person in personArray{
             println(person.fullName())
@@ -24,6 +27,7 @@ class ViewController: UIViewController {
         
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
