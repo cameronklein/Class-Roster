@@ -25,8 +25,8 @@
                                     <segue destination="IpY-cG-aL4" kind="push" id="fzk-V0-WwP"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Uh oh. No persons loaded." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djo-On-FOd">
-                                <rect key="frame" x="16" y="382" width="288" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNi-8I-SG0">
+                                <rect key="frame" x="16" y="384" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -36,7 +36,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="mnS-x2-I6F"/>
                     <connections>
-                        <outlet property="label" destination="Djo-On-FOd" id="CuF-qS-sEC"/>
+                        <outlet property="label" destination="NNi-8I-SG0" id="wLb-Tf-DPv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

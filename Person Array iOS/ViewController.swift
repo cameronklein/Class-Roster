@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+import Darwin
 
 class ViewController: UIViewController {
     
@@ -17,6 +19,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    
         
         self.initializePersonArray()
         label.text = "\(personArray.count) people loaded from Roster.plist!"
@@ -25,16 +28,15 @@ class ViewController: UIViewController {
             println(person.fullName())
         }
         
-        
     }
-    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
+
     
     func initializePersonArray(){
         
