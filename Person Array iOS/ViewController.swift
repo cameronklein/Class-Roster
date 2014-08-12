@@ -60,27 +60,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //Get property list
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
-        let dict = NSDictionary(contentsOfFile:path)
+        let dict = NSArray(contentsOfFile:path)
+    
         
-        var tempArray = dict["Roster"] as Array<String>
-        
-        for person in tempArray{
-            self.personArray.append(Person(fullName: person))
-        }
-        
-        for person in personArray{
-            if person.lastName == "Klein"{
-                
-            person.image = UIImage(named: "cameron.jpg")
-            }
+        for person in dict{
+            var thisFirst = person["firstName"] as String
+            var thisLast = person["lastName"] as String
+            var imagePath = person["image"] as String
+            var thisImage = UIImage(named: imagePath) as UIImage
+            var thisPosition = person["position"] as String
+            var thisPerson = Person(firstName: thisFirst, lastName: thisLast, image: thisImage, position: thisPosition)
+            self.personArray.append(thisPerson)
         }
     }
     
     //END Custom Functions
     //START DataSource Protocol Functions
     
+    
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return personArray.count
+       return personArray.count
     }
     
     
@@ -88,6 +87,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
         personArray.sort { $0.firstName < $1.firstName }
+        
         
         cell.textLabel.text = self.personArray[indexPath.row].fullName()
         

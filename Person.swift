@@ -14,6 +14,7 @@ class Person{
     var firstName   : String
     var lastName    : String
     var image       : UIImage?
+    var position    : String?
     
     //Initialize with seperate first and last names.
     init( firstName: String, lastName : String){
@@ -39,7 +40,13 @@ class Person{
         
         
      
-        }
+    }
+    
+    convenience init(firstName: String, lastName: String, image: UIImage, position: String){
+        self.init(firstName: firstName, lastName: lastName)
+        self.image = image
+        self.position = position
+    }
     
     
     //Return full name as one string.
