@@ -88,7 +88,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         personArray.sort { $0.firstName < $1.firstName }
         
-        
         cell.textLabel.text = self.personArray[indexPath.row].fullName()
         
         return cell
