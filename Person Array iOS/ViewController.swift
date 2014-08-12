@@ -19,7 +19,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
     
         self.initializePersonArray()
-        //label.text = "\(personArray.count) people loaded from Roster.plist!"
         
         for person in personArray{
             println(person.fullName())
@@ -72,6 +71,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return cell
     }
+    
+    //Segue function
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
         

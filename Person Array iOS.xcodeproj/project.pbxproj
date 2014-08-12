@@ -88,9 +88,9 @@
 				7EC7941A199409D0006A054F /* ViewController.swift */,
 				7EC793F91993FDB7006A054F /* AppDelegate.swift */,
 				7EC794161993FDC7006A054F /* Person.swift */,
+				7E5D8B631999D5D40031F72E /* PersonVC.swift */,
 				7EC7941C19940EA2006A054F /* Roster.plist */,
 				7EC793FD1993FDB7006A054F /* Main.storyboard */,
-				7E5D8B631999D5D40031F72E /* PersonVC.swift */,
 				7EC794001993FDB7006A054F /* Images.xcassets */,
 				7EC793F71993FDB7006A054F /* Supporting Files */,
 			);
