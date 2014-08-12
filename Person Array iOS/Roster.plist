@@ -4,35 +4,34 @@
 <dict>
 	<key>Roster</key>
 	<array>
-            <string>Nate Birkholz</string>
-            <string>Matthew Brightbill</string>
-            <string>Jeff Chavez</string>
-            <string>John Clem</string>
-            <string>Chrstie Ferderer</string>
-            <string>David Fry</string>
-            <string>Adrian Gherle</string>
-            <string>Jake Hawken</string>
-            <string>Tony Huang</string>
-            <string>Brad Johnson</string>
-            <string>Shams Kazi</string>
-            <string>Cameron Klein</string>
-            <string>Kori Kolodziejczak</string>
-            <string>Parker Lewis</string>
-            <string>Nathan Ma</string>
-            <string>Casey MacPhee</string>
-            <string>Brendan McAleer</string>
-            <string>Brian Mendez</string>
-            <string>Mark Morris</string>
-            <string>Rowan North</string>
-            <string>Lance Park</string>
-            <string>Kevin Pham</string>
-            <string>Will Richman</string>
-            <string>Heather Thueringer</string>
-            <string>Tuan Vu</string>
-            <string>Zack Walkingstick</string>
-            <string>Sara Wong</string>
-            <string>Hongyao Zhang</string>
-
+		<string>Nate Birkholz</string>
+		<string>Matthew Brightbill</string>
+		<string>Jeff Chavez</string>
+		<string>John Clem</string>
+		<string>Chrstie Ferderer</string>
+		<string>David Fry</string>
+		<string>Adrian Petrica Gherle</string>
+		<string>Jake Hawken</string>
+		<string>Tony Huang</string>
+		<string>Brad Johnson</string>
+		<string>Shams Kazi</string>
+		<string>Cameron Klein</string>
+		<string>Kori Kolodziejczak</string>
+		<string>Parker Lewis</string>
+		<string>Nathan Ma</string>
+		<string>Casey MacPhee</string>
+		<string>Brendan McAleer</string>
+		<string>Brian Mendez</string>
+		<string>Mark Morris</string>
+		<string>Rowan North</string>
+		<string>Lance Park</string>
+		<string>Kevin Pham</string>
+		<string>Will Richman</string>
+		<string>Heather Thueringer</string>
+		<string>Tuan Vu</string>
+		<string>Zack Walkingstick</string>
+		<string>Sara Wong</string>
+		<string>Hongyao Zhang</string>
 	</array>
 </dict>
 </plist>

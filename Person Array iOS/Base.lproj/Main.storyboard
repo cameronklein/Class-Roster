@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Class Roster-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Person_Array_iOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,37 +16,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2k-jD-uJe">
-                                <rect key="frame" x="142" y="269" width="37" height="30"/>
-                                <state key="normal" title="Next!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="IpY-cG-aL4" kind="push" id="fzk-V0-WwP"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNi-8I-SG0">
-                                <rect key="frame" x="16" y="384" width="288" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NOq-TS-wu7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="nW1-vA-5U5">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nW1-vA-5U5" id="L6q-21-PiG">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="IpY-cG-aL4" kind="push" identifier="Detail" id="GRU-Ym-IiX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mnS-x2-I6F"/>
+                    <navigationItem key="navigationItem" title="Class Roster" id="mnS-x2-I6F">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="cXb-WC-rL4"/>
+                    </navigationItem>
                     <connections>
-                        <outlet property="label" destination="NNi-8I-SG0" id="wLb-Tf-DPv"/>
+                        <outlet property="tableView" destination="NOq-TS-wu7" id="4uq-nf-wg0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="331" y="182"/>
         </scene>
-        <!--View Controller-->
+        <!--Person Info-->
         <scene sceneID="RnX-wm-V5k">
             <objects>
-                <viewController id="IpY-cG-aL4" sceneMemberID="viewController">
+                <viewController id="IpY-cG-aL4" customClass="DetailViewController" customModule="Person_Array_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="09w-vn-s72"/>
                         <viewControllerLayoutGuide type="bottom" id="DoS-i7-6Fn"/>
@@ -54,13 +57,34 @@
                     <view key="view" contentMode="scaleToFill" id="bMP-dt-CPl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Qb-1H-ZlO">
+                                <rect key="frame" x="16" y="104" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Click above to edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1Z-zd-R58">
+                                <rect key="frame" x="16" y="142" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="unknownSilhouette.png" translatesAutoresizingMaskIntoConstraints="NO" id="43E-tf-nAb">
+                                <rect key="frame" x="38" y="196" width="245" height="245"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="a5W-3g-RSR"/>
+                    <navigationItem key="navigationItem" title="Person Info" id="a5W-3g-RSR">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="XLT-ok-duH"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nameField" destination="0Qb-1H-ZlO" id="C02-tc-fJB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PtL-xG-J1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="331" y="806"/>
+            <point key="canvasLocation" x="765" y="182"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gA3-5S-2I1">
@@ -81,6 +105,9 @@
             <point key="canvasLocation" x="-71" y="182"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="unknownSilhouette.png" width="300" height="300"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

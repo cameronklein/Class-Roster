@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E5D8B641999D5D40031F72E /* PersonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D8B631999D5D40031F72E /* PersonVC.swift */; };
+		7E8707DC1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8707DB1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg */; };
+		7E8CEF051999EF6600E93046 /* unknownSilhouette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEF041999EF6600E93046 /* unknownSilhouette.png */; };
 		7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC793F91993FDB7006A054F /* AppDelegate.swift */; };
 		7EC793FF1993FDB7006A054F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EC793FD1993FDB7006A054F /* Main.storyboard */; };
 		7EC794011993FDB7006A054F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EC794001993FDB7006A054F /* Images.xcassets */; };
@@ -27,6 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E5D8B631999D5D40031F72E /* PersonVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonVC.swift; sourceTree = "<group>"; };
+		7E8707DB1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Deep Blue Space iPhone 5 Wallpaper.jpg"; path = "../../../Downloads/Deep Blue Space iPhone 5 Wallpaper.jpg"; sourceTree = "<group>"; };
+		7E8CEF041999EF6600E93046 /* unknownSilhouette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknownSilhouette.png; sourceTree = "<group>"; };
 		7EC793F41993FDB7006A054F /* Person Array iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person Array iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC793F81993FDB7006A054F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EC793F91993FDB7006A054F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 				7EC794161993FDC7006A054F /* Person.swift */,
 				7EC7941C19940EA2006A054F /* Roster.plist */,
 				7EC793FD1993FDB7006A054F /* Main.storyboard */,
+				7E5D8B631999D5D40031F72E /* PersonVC.swift */,
 				7EC794001993FDB7006A054F /* Images.xcassets */,
 				7EC793F71993FDB7006A054F /* Supporting Files */,
 			);
@@ -93,6 +100,8 @@
 		7EC793F71993FDB7006A054F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7E8CEF041999EF6600E93046 /* unknownSilhouette.png */,
+				7E8707DB1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg */,
 				7EC793F81993FDB7006A054F /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -198,6 +207,8 @@
 				7EC793FF1993FDB7006A054F /* Main.storyboard in Resources */,
 				7EC7941D19940EA2006A054F /* Roster.plist in Resources */,
 				7EC794011993FDB7006A054F /* Images.xcassets in Resources */,
+				7E8CEF051999EF6600E93046 /* unknownSilhouette.png in Resources */,
+				7E8707DC1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC7941B199409D0006A054F /* ViewController.swift in Sources */,
+				7E5D8B641999D5D40031F72E /* PersonVC.swift in Sources */,
 				7EC794171993FDC7006A054F /* Person.swift in Sources */,
 				7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */,
 			);
@@ -405,6 +417,7 @@
 				7EC794121993FDB8006A054F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7EC794131993FDB8006A054F /* Build configuration list for PBXNativeTarget "Person Array iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +426,7 @@
 				7EC794151993FDB8006A054F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
