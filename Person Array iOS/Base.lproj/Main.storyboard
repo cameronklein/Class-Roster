@@ -80,6 +80,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="nameField" destination="0Qb-1H-ZlO" id="C02-tc-fJB"/>
+                        <outlet property="personImage" destination="43E-tf-nAb" id="1yY-uj-1LN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PtL-xG-J1k" userLabel="First Responder" sceneMemberID="firstResponder"/>

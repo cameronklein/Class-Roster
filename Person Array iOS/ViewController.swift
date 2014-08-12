@@ -12,9 +12,13 @@ import Foundation
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+
+    //Properties
     @IBOutlet weak var tableView: UITableView!
     var personArray = [Person]()
-                            
+    
+    //START Override Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -29,6 +33,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        
+        let index = tableView.indexPathForSelectedRow()
+        let selectedPerson = personArray[index.row]
+        if segue.identifier! == "Detail" {
+            let destination = segue.destinationViewController as DetailViewController
+            destination.thisPerson = selectedPerson
+        }
+    }
+    
+    // END Override Functions
+    // START Custom Functions
+    
     func initializePersonArray(){
         
         //Get property list
@@ -40,22 +67,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for person in tempArray{
             self.personArray.append(Person(fullName: person))
         }
+        
+        for person in personArray{
+            if person.lastName == "Klein"{
+                
+            person.image = UIImage(named: "cameron.jpg")
+            }
+        }
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
-    //DataSource Functions
+    //END Custom Functions
+    //START DataSource Protocol Functions
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return personArray.count
@@ -72,24 +94,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    //Segue function
-    
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
-        
-    {
-        let index = tableView.indexPathForSelectedRow()
-        let selectedPerson = personArray[index.row]
-        if segue.identifier! == "Detail"
-            
-        {
-            let destination = segue.destinationViewController as DetailViewController
-            destination.thisPerson = selectedPerson
-            
-            
-        }
-        
-    }
-    
+    //END DataSource Protocol Functions
+
 
 }
 

@@ -11,6 +11,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var personImage: UIImageView!
     @IBOutlet weak var nameField: UITextField!
 
     var thisPerson = Person(firstName: "John", lastName: "Doe")
@@ -22,6 +23,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameField.text = thisPerson.fullName()
+        if thisPerson.image != nil{
+            personImage.image = thisPerson.image
+        }
     }
     
     
