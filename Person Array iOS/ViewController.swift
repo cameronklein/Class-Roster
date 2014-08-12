@@ -60,10 +60,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //Get property list
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
-        let dict = NSArray(contentsOfFile:path)
+        let array = NSArray(contentsOfFile:path)
     
         
-        for person in dict{
+        for person in array{
             var thisFirst = person["firstName"] as String
             var thisLast = person["lastName"] as String
             var imagePath = person["image"] as String
@@ -87,7 +87,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
         personArray.sort { $0.firstName < $1.firstName }
-        
         
         cell.textLabel.text = self.personArray[indexPath.row].fullName()
         
