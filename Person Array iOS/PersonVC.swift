@@ -16,10 +16,12 @@ class DetailViewController: UIViewController {
 
     var thisPerson = Person(firstName: "John", lastName: "Doe")
 
+    // Initializer
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
     }
     
+    // START Override Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         nameField.text = thisPerson.fullName()
@@ -28,15 +30,27 @@ class DetailViewController: UIViewController {
         }
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+
+    // Update name of Person when pressing back button
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        thisPerson.setFullName(nameField.text)
+        var nameArray = nameField.text.componentsSeparatedByString(" ")
+        if nameArray.count < 2{
+            var alert: UIAlertView = UIAlertView()
+            alert.title = "Name not updated!"
+            alert.message = "Only one name was provided. Next time, please enter both first and last name."
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        } else {
+            thisPerson.setFullName(nameField.text)
+        }
     }
+    
+    // END Override Functions
     
     
     
