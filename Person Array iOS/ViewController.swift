@@ -10,12 +10,13 @@ import UIKit
 import Foundation
 
 
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
     //Properties
     @IBOutlet weak var tableView: UITableView!
-    var personArray = [Person]()
+    var personArray = [[Person]]()
     
     //START Override Functions
     
@@ -24,9 +25,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
         self.initializePersonArray()
         
-        for person in personArray{
-            println(person.fullName())
+        for array in personArray{
+            for person in array{
+                println(person.fullName())
+            }
         }
+        
         
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
@@ -46,7 +50,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
         let index = tableView.indexPathForSelectedRow()
-        let selectedPerson = personArray[index.row]
+        let selectedPerson = personArray[index.section][index.row]
         if segue.identifier! == "Detail" {
             let destination = segue.destinationViewController as DetailViewController
             destination.thisPerson = selectedPerson
@@ -62,16 +66,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
         let array = NSArray(contentsOfFile:path)
     
+        var teacherArray = [Person]()
+        var studentArray = [Person]()
         
         for person in array{
+            
             var thisFirst = person["firstName"] as String
             var thisLast = person["lastName"] as String
             var imagePath = person["image"] as String
             var thisImage = UIImage(named: imagePath) as UIImage
             var thisPosition = person["position"] as String
             var thisPerson = Person(firstName: thisFirst, lastName: thisLast, image: thisImage, position: thisPosition)
-            self.personArray.append(thisPerson)
+            if thisPosition == "Teacher"{
+                teacherArray.append(thisPerson)
+            } else if thisPosition == "Student"{
+                studentArray.append(thisPerson)
+            }
+            
         }
+        studentArray.sort { $0.firstName < $1.firstName }
+        teacherArray.sort { $0.firstName < $1.firstName }
+        self.personArray.append(studentArray)
+        self.personArray.append(teacherArray)
+        
+        
+        
     }
     
     //END Custom Functions
@@ -79,18 +98,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-       return personArray.count
+       return personArray[section].count
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return personArray.count
+    }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        var cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-        personArray.sort { $0.firstName < $1.firstName }
+
+        var thisPerson = self.personArray[indexPath.section][indexPath.row]
         
-        cell.textLabel.text = self.personArray[indexPath.row].fullName()
+        cell.textLabel.text = thisPerson.fullName()
+
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
+        switch section {
+        case 0: return "Students"
+        case 1: return "Teachers"
+        default: return " "
+        
+        }
     }
     
     //END DataSource Protocol Functions
