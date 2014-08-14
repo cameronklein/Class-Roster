@@ -10,6 +10,7 @@
 		7E5D8B641999D5D40031F72E /* PersonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D8B631999D5D40031F72E /* PersonVC.swift */; };
 		7E8707DC1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8707DB1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg */; };
 		7E8AD327199D301C0054BB3C /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */; };
+		7E8AD329199D58300054BB3C /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD328199D58300054BB3C /* ImagePickerController.swift */; };
 		7E8CEF051999EF6600E93046 /* unknownSilhouette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEF041999EF6600E93046 /* unknownSilhouette.png */; };
 		7E8CEF07199A6B3400E93046 /* cameron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEF06199A6B3400E93046 /* cameron.jpg */; };
 		7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC793F91993FDB7006A054F /* AppDelegate.swift */; };
@@ -35,6 +36,7 @@
 		7E5D8B631999D5D40031F72E /* PersonVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonVC.swift; sourceTree = "<group>"; };
 		7E8707DB1999AD1100627296 /* Deep Blue Space iPhone 5 Wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Deep Blue Space iPhone 5 Wallpaper.jpg"; path = "../../../Downloads/Deep Blue Space iPhone 5 Wallpaper.jpg"; sourceTree = "<group>"; };
 		7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
+		7E8AD328199D58300054BB3C /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		7E8CEF041999EF6600E93046 /* unknownSilhouette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknownSilhouette.png; sourceTree = "<group>"; };
 		7E8CEF06199A6B3400E93046 /* cameron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cameron.jpg; sourceTree = "<group>"; };
 		7EC793F41993FDB7006A054F /* Person Array iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person Array iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 				7EC794161993FDC7006A054F /* Person.swift */,
 				7E5D8B631999D5D40031F72E /* PersonVC.swift */,
 				7EC793FD1993FDB7006A054F /* Main.storyboard */,
+				7E8AD328199D58300054BB3C /* ImagePickerController.swift */,
 				7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */,
 				7EC794001993FDB7006A054F /* Images.xcassets */,
 				7EC7941C19940EA2006A054F /* Roster.plist */,
@@ -234,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC7941B199409D0006A054F /* ViewController.swift in Sources */,
+				7E8AD329199D58300054BB3C /* ImagePickerController.swift in Sources */,
 				7E5D8B641999D5D40031F72E /* PersonVC.swift in Sources */,
 				7EC794171993FDC7006A054F /* Person.swift in Sources */,
 				7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */,

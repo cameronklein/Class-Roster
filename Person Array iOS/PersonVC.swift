@@ -8,13 +8,48 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
+    var thisPerson : Person!
     @IBOutlet weak var personImage: UIImageView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var studentLabel: UILabel!
+    
+    
+    @IBAction func takePhoto(sender: AnyObject) {
 
-    var thisPerson : Person!
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) == true {
+            
+            let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera", delegate: nil, cancelButtonTitle: "Ok")
+            
+            myAlertView.show()
+            
+        } else{
+            
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            //picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
+        let image = info["UIImagePickerControllerEditedImage"] as? UIImage
+        thisPerson.image = image
+        self.personImage.image = image
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        
+    }
+
+
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     
     // START Override Functions
     override func viewDidLoad() {
@@ -24,10 +59,21 @@ class DetailViewController: UIViewController {
         if thisPerson.image != nil{
             personImage.image = thisPerson.image
         }
-    }
-    
+        
+}
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if segue.identifier == "TakePhoto" {
+                let pickerController = segue.destinationViewController as ImagePickerController
+                pickerController.delegate = self
+                pickerController.sourceType = UIImagePickerControllerSourceType.Camera
+                pickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo
+                pickerController.cameraDevice = UIImagePickerControllerCameraDevice.Front
+        }
     }
     
 

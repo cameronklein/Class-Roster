@@ -70,9 +70,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
-        
-        
-        
         if segue.identifier! == "Detail" {
             let index = tableView.indexPathForSelectedRow()
             let selectedPerson = personArray[index.section][index.row]

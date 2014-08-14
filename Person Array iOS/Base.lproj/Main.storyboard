@@ -144,15 +144,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="unknownSilhouette.png" translatesAutoresizingMaskIntoConstraints="NO" id="43E-tf-nAb">
-                                <rect key="frame" x="38" y="196" width="245" height="245"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxP-DW-Jn7">
-                                <rect key="frame" x="16" y="449" width="267" height="21"/>
+                                <rect key="frame" x="27" y="75" width="267" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="unknownSilhouette.png" translatesAutoresizingMaskIntoConstraints="NO" id="c4h-DW-LRM">
+                                <rect key="frame" x="16" y="171" width="288" height="288"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAj-Ph-Nnx">
+                                <rect key="frame" x="122" y="467" width="77" height="30"/>
+                                <state key="normal" title="Take Photo">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="IpY-cG-aL4" eventType="touchUpInside" id="Mh3-2Z-cor"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -161,7 +170,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="nameField" destination="0Qb-1H-ZlO" id="C02-tc-fJB"/>
-                        <outlet property="personImage" destination="43E-tf-nAb" id="1yY-uj-1LN"/>
+                        <outlet property="personImage" destination="c4h-DW-LRM" id="plt-W7-opR"/>
                         <outlet property="studentLabel" destination="nxP-DW-Jn7" id="Ivc-I0-qQb"/>
                     </connections>
                 </viewController>
