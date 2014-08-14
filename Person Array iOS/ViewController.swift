@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Foundation
-
 
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -17,6 +15,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //Properties
     @IBOutlet weak var tableView: UITableView!
     var personArray = [[Person]]()
+    
+    @IBAction func unwindFromCreateNewPerson(segue: UIStoryboardSegue){
+        let sourceVC: AddPersonViewController = segue.sourceViewController as AddPersonViewController
+        
+        let firstName = sourceVC.firstName
+        let lastName = sourceVC.lastName
+        let position = sourceVC.position as String
+        let image = UIImage(named: " ") as UIImage
+        println("Fired!")
+        
+        if position == "Student"{
+            personArray[0].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Student"))
+            println("Student Added!")
+        }
+        if position == "Teacher"{
+            personArray[1].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Teacher"))
+            println("Teacher Added!")
+        }
+    }
+    
+    
     
     //START Override Functions
     
@@ -39,6 +58,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        personArray[0].sort { $0.firstName < $1.firstName }
+        personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
     }
 
@@ -49,16 +70,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
-        let index = tableView.indexPathForSelectedRow()
-        let selectedPerson = personArray[index.section][index.row]
+        
+        
+        
         if segue.identifier! == "Detail" {
+            let index = tableView.indexPathForSelectedRow()
+            let selectedPerson = personArray[index.section][index.row]
             let destination = segue.destinationViewController as DetailViewController
             destination.thisPerson = selectedPerson
         }
     }
     
+    
+    
     // END Override Functions
     // START Custom Functions
+    
+    
     
     func initializePersonArray(){
         
@@ -89,26 +117,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.personArray.append(studentArray)
         self.personArray.append(teacherArray)
         
-        
-        
     }
     
     //END Custom Functions
     //START DataSource Protocol Functions
     
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        
+        return personArray.count
+        
+    }
+    
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        
        return personArray[section].count
+        
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        return personArray.count
-    }
-    
+
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        
         var cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-
         var thisPerson = self.personArray[indexPath.section][indexPath.row]
         
         cell.textLabel.text = thisPerson.fullName()

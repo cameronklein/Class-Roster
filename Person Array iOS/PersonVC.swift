@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Cameron Klein. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
@@ -15,12 +14,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var studentLabel: UILabel!
 
-    var thisPerson = Person(firstName: "John", lastName: "Doe")
-
-    // Initializer
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
-    }
+    var thisPerson : Person!
     
     // START Override Functions
     override func viewDidLoad() {
