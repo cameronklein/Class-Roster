@@ -6,26 +6,30 @@
 //  Copyright (c) 2014 Cameron Klein. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class Person{
+class Person: NSObject, NSCoding{
     
-    var firstName   : String
-    var lastName    : String
-    var image       : UIImage?
-    var position    : String?
+    var firstName   :   String
+    var lastName    :   String
+    var image       :   UIImage?
+    var position    :   String?
+    
+    
     
     //Initialize with seperate first and last names.
-    init( firstName: String, lastName : String){
-        self.firstName = firstName
-        self.lastName = lastName
+    init(firstName: String, lastName : String){
+        
+        self.firstName  =   firstName
+        self.lastName   =   lastName
+        super.init()
+        
     }
     
     //Initialize with full name as one string.
     convenience init(fullName: String){
-        var nameArray = fullName.componentsSeparatedByString(" ")
         
+        let nameArray = fullName.componentsSeparatedByString(" ")
         
         //Handle long names
         if nameArray.count == 2{
@@ -44,8 +48,8 @@ class Person{
     
     convenience init(firstName: String, lastName: String, image: UIImage, position: String){
         self.init(firstName: firstName, lastName: lastName)
-        self.image = image
-        self.position = position
+        self.image      =   image
+        self.position   =   position
     }
     
     
@@ -54,8 +58,9 @@ class Person{
         return self.firstName + " " + self.lastName
     }
     
+    
     func setFullName(fullName: String){
-        var nameArray = fullName.componentsSeparatedByString(" ")
+        let nameArray = fullName.componentsSeparatedByString(" ")
         
         //Handle long names
         if nameArray.count == 2{
@@ -69,8 +74,35 @@ class Person{
             self.firstName = first
             self.lastName = nameArray.last as String!
         }
-
+    }
+    
+    
+    
+    //
+    //  NSCoding Methods
+    //
+    
+    required init(coder aDecoder: NSCoder!) {
+        let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
+        let lastName                =   aDecoder.decodeObjectForKey("lastName")   as String
+        let image: UIImage?         =   aDecoder.decodeObjectForKey("image")      as? UIImage
+        let position: String?       =   aDecoder.decodeObjectForKey("position")   as? String
         
-           }
+        self.firstName  =   firstName
+        self.lastName   =   lastName
+        self.image      =   image
+        self.position   =   position
+     
+        
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(self.firstName, forKey: "firstName")
+        aCoder.encodeObject(self.lastName, forKey: "lastName")
+        aCoder.encodeObject(self.image, forKey: "image")
+        aCoder.encodeObject(self.position, forKey: "position")
+        
+        
+    }
     
 }

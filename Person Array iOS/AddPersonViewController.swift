@@ -29,37 +29,44 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         firstName = firstNameField.text
         lastName = lastNameField.text
     }
     
+    
     func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
         return 1
     }
+    
     
     func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int {
         return 2
     }
     
+    
     func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String! {
-        if row == 0{
-            return "Student"
+        
+        switch row{
+            case 0: return "Student"
+            case 1: return "Teacher"
+            default: return ""
         }
-        if row == 1{
-            return "Teacher"
-        }
-        return " "
     }
+    
+    
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
         if row == 0{
             position = "Student"

@@ -11,36 +11,16 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
-    //Properties
+  
     @IBOutlet weak var tableView: UITableView!
     var personArray = [[Person]]()
     
-    @IBAction func unwindFromCreateNewPerson(segue: UIStoryboardSegue){
-        let sourceVC: AddPersonViewController = segue.sourceViewController as AddPersonViewController
-        
-        let firstName = sourceVC.firstName
-        let lastName = sourceVC.lastName
-        let position = sourceVC.position as String
-        let image = UIImage(named: " ") as UIImage
-        println("Fired!")
-        
-        if position == "Student"{
-            personArray[0].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Student"))
-            println("Student Added!")
-        }
-        if position == "Teacher"{
-            personArray[1].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Teacher"))
-            println("Teacher Added!")
-        }
-    }
     
-    
-    
-    //START Override Functions
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveData", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
         self.initializePersonArray()
         
@@ -56,19 +36,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         personArray[0].sort { $0.firstName < $1.firstName }
         personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        
+        // Seque to detail view -- pass person to destination view controller
         
         if segue.identifier! == "Detail" {
             let index = tableView.indexPathForSelectedRow()
@@ -79,45 +64,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    
-    // END Override Functions
-    // START Custom Functions
-    
+    func getFilePathOfData() -> String{
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let dir = paths[0] as String
+        let fullPath = dir + "/People"
+        
+        return fullPath
+    }
     
     
     func initializePersonArray(){
         
-        //Get property list
-        let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
-        let array = NSArray(contentsOfFile:path)
-    
-        var teacherArray = [Person]()
-        var studentArray = [Person]()
+        personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
         
-        for person in array{
-            
-            var thisFirst = person["firstName"] as String
-            var thisLast = person["lastName"] as String
-            var imagePath = person["image"] as String
-            var thisImage = UIImage(named: imagePath) as UIImage
-            var thisPosition = person["position"] as String
-            var thisPerson = Person(firstName: thisFirst, lastName: thisLast, image: thisImage, position: thisPosition)
-            if thisPosition == "Teacher"{
-                teacherArray.append(thisPerson)
-            } else if thisPosition == "Student"{
-                studentArray.append(thisPerson)
-            }
-            
-        }
-        studentArray.sort { $0.firstName < $1.firstName }
-        teacherArray.sort { $0.firstName < $1.firstName }
-        self.personArray.append(studentArray)
-        self.personArray.append(teacherArray)
+        // Uncomment below to load from Roster.plist in case of corrupted backup file
+        // initializeArrayFromBackup()
         
     }
     
-    //END Custom Functions
-    //START DataSource Protocol Functions
+ 
+
+    
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
         
@@ -125,23 +92,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         
        return personArray[section].count
         
     }
-    
 
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
         var cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-        
         var thisPerson = self.personArray[indexPath.section][indexPath.row]
-        
         cell.textLabel.text = thisPerson.fullName()
-
-        
         return cell
     }
     
@@ -154,7 +115,69 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    //END DataSource Protocol Functions
+
+    
+    func saveData(){
+        
+        let newPersonArray = personArray as NSArray
+        let filePath = self.getFilePathOfData()
+        var success = NSKeyedArchiver.archiveRootObject(newPersonArray, toFile: filePath)
+        if success{
+            println("Data Successfully Saved")
+        }
+    }
+    
+    
+    @IBAction func unwindFromCreateNewPerson(segue: UIStoryboardSegue){
+        
+        let sourceViewController: AddPersonViewController = segue.sourceViewController as AddPersonViewController
+        
+        let firstName   =   sourceViewController.firstName
+        let lastName    =   sourceViewController.lastName
+        let position    =   sourceViewController.position as String
+        let image       =   UIImage(named: " ") as UIImage
+        
+        if position == "Student"{
+            personArray[0].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Student"))
+            println("New Student Added!")
+        }
+        else if position == "Teacher"{
+            personArray[1].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Teacher"))
+            println("New Teacher Added!")
+        }
+    }
+    
+    
+    func initializeArrayFromBackup(){
+
+        let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
+        let array = NSArray(contentsOfFile:path)
+
+        var teacherArray = [Person]()
+        var studentArray = [Person]()
+
+        for person in array{
+
+            var thisFirst = person["firstName"] as String
+            var thisLast = person["lastName"] as String
+            var imagePath = person["image"] as String
+            var thisImage = UIImage(named: imagePath) as UIImage
+            var thisPosition = person["position"] as String
+            var thisPerson = Person(firstName: thisFirst, lastName: thisLast, image: thisImage, position: thisPosition)
+            if thisPosition == "Teacher"{
+                teacherArray.append(thisPerson)
+            } else if thisPosition == "Student"{
+                studentArray.append(thisPerson)
+            }
+
+        }
+        studentArray.sort { $0.firstName < $1.firstName }
+        teacherArray.sort { $0.firstName < $1.firstName }
+        self.personArray.append(studentArray)
+        self.personArray.append(teacherArray)
+        
+        
+    }
 
 
 }
