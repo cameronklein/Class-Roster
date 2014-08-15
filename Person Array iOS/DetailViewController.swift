@@ -13,6 +13,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     let USING_SIMULATOR = true
     
     var thisPerson : Person!
+    
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
@@ -54,19 +55,21 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     override func viewWillDisappear(animated: Bool) {
+        
         super.viewWillDisappear(animated)
+        
         var nameArray = nameField.text.componentsSeparatedByString(" ")
+        
         if nameArray.count < 2{
             var alert: UIAlertView = UIAlertView()
-            alert.title = "Name not updated!"
-            alert.message = "Only one name was provided. Next time, please enter both first and last name."
+            alert.title     = "Name not updated!"
+            alert.message   = "Only one name was provided. Next time, please enter both first and last name."
             alert.addButtonWithTitle("Ok")
             alert.show()
         } else {
             thisPerson.setFullName(nameField.text)
         }
     }
-
     
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -88,6 +91,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
+    
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
         let image = info["UIImagePickerControllerEditedImage"] as? UIImage
         
@@ -104,13 +108,4 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    
-    
-
-    // Update name of Person when pressing back button
-
-    
-    
-    
-    
 }
