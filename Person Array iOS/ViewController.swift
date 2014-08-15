@@ -22,7 +22,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveData", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
-        self.initializePersonArray()
+        self.initializeArrayFromBackup()
         
         for array in personArray{
             for person in array{
@@ -38,10 +38,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         personArray[0].sort { $0.firstName < $1.firstName }
         personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
+        saveData()
+        
     }
     
     
@@ -76,9 +79,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func initializePersonArray(){
         
         personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
-        
-        // Uncomment below to load from Roster.plist in case of corrupted backup file
-        // initializeArrayFromBackup()
         
     }
     
@@ -139,11 +139,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if position == "Student"{
             personArray[0].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Student"))
-            println("New Student Added!")
+            println("New student \(firstName!) \(lastName!) added!")
         }
         else if position == "Teacher"{
             personArray[1].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Teacher"))
-            println("New Teacher Added!")
+            println("New teacher \(firstName!) \(lastName!) added!")
         }
     }
     
@@ -154,13 +154,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let sourceViewController: DetailViewController = segue.sourceViewController as DetailViewController
         
         let thisPerson : Person = sourceViewController.thisPerson
+        let name = thisPerson.fullName()
         var i = 0
-        var j = 0
+        
         for array in personArray{
+            var j = 0
             for person in array{
                 if person == thisPerson{
                     personArray[i].removeAtIndex(j)
-                    println("Searched")
+                    println("\(name) removed from roster.")
+                    break
                 }
               j++
             }

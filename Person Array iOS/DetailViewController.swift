@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    let USING_SIMULATOR = true
+    let USING_SIMULATOR = false
     
     var thisPerson : Person!
     
@@ -20,6 +20,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         nameField.text      = thisPerson.fullName()
@@ -29,6 +30,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             personImage.image = thisPerson.image
         }
         
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEndEditing", name: "UITextFieldTextDidEndEditingNotification", object: nameField)
+        self.nameField.delegate = self
     }
     
     
@@ -85,7 +88,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = true
-            //picker.sourceType = UIImagePickerControllerSourceType.Camera
+            picker.sourceType = UIImagePickerControllerSourceType.Camera
             self.presentViewController(picker, animated: true, completion: nil)
         }
         
@@ -107,11 +110,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        println("should return")
+        textField.resignFirstResponder()
+        return true
+    }
 
-
-    
-    
-    
-    
-    
 }
