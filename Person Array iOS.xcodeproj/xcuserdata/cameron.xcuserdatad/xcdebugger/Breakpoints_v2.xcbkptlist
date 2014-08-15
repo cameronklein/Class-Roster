@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Person Array iOS/DetailViewController.swift"
-            timestampString = "429774899.103539"
+            timestampString = "429775259.958707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "DetailViewController"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Person Array iOS/ViewController.swift"
+            timestampString = "429807693.416586"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Person Array iOS/DetailViewController.swift"
-            timestampString = "429774899.103539"
+            filePath = "Person Array iOS/ViewController.swift"
+            timestampString = "429807781.15758"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "unwindFromDeletePerson(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -48,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="331" y="182"/>
+            <point key="canvasLocation" x="-406" y="498"/>
         </scene>
         <!--Add Person View Controller-->
         <scene sceneID="EE3-WH-pLD">
@@ -67,7 +67,11 @@
                                 <items>
                                     <navigationItem title="Add New Person" id="akd-ak-019">
                                         <barButtonItem key="backBarButtonItem" title="Cancel" id="eGT-Sf-Lxw"/>
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dbC-Kd-QDN"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dbC-Kd-QDN">
+                                            <connections>
+                                                <segue destination="oMg-Ye-ICd" kind="unwind" unwindAction="unwindFromCancelButton:" id="r6B-dn-XC7"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="jDl-4p-3d7">
                                             <connections>
                                                 <segue destination="oMg-Ye-ICd" kind="unwind" unwindAction="unwindFromCreateNewPerson:" id="oT2-CI-kHY"/>
@@ -119,7 +123,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CfS-b8-yQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="oMg-Ye-ICd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="765" y="-462"/>
+            <point key="canvasLocation" x="28" y="190"/>
         </scene>
         <!--Details-->
         <scene sceneID="RnX-wm-V5k">
@@ -162,6 +166,16 @@
                                     <action selector="takePhoto:" destination="IpY-cG-aL4" eventType="touchUpInside" id="Mh3-2Z-cor"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvY-yZ-d8g">
+                                <rect key="frame" x="138" y="530" width="44" height="30"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="XX2-Fj-wYw" kind="unwind" unwindAction="unwindFromDeletePerson:" id="ThQ-aL-5ug"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -175,8 +189,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PtL-xG-J1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XX2-Fj-wYw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="765" y="182"/>
+            <point key="canvasLocation" x="28" y="806"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gA3-5S-2I1">
@@ -194,7 +209,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6iJ-r1-Rde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-71" y="182"/>
+            <point key="canvasLocation" x="-808" y="498"/>
         </scene>
     </scenes>
     <resources>

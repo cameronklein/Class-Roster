@@ -147,6 +147,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    @IBAction func unwindFromCancelButton(segue: UIStoryboardSegue){/*Do nothing*/}
+    
+    @IBAction func unwindFromDeletePerson(segue: UIStoryboardSegue){
+    
+        let sourceViewController: DetailViewController = segue.sourceViewController as DetailViewController
+        
+        let thisPerson : Person = sourceViewController.thisPerson
+        var i = 0
+        var j = 0
+        for array in personArray{
+            for person in array{
+                if person == thisPerson{
+                    personArray[i].removeAtIndex(j)
+                    println("Searched")
+                }
+              j++
+            }
+            i++
+        }
+    
+    }
+    
     
     func initializeArrayFromBackup(){
 

@@ -17,7 +17,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
-        if segue.identifier == "TakePhoto" {
+        if segue.identifier? == "TakePhoto" {
             
             let pickerController = segue.destinationViewController as UIImagePickerController
             
@@ -74,7 +74,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func takePhoto(sender: AnyObject) {
 
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) == USING_SIMULATOR {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) == USING_SIMULATOR {
             
             let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera", delegate: nil, cancelButtonTitle: "Ok")
             
@@ -108,4 +108,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
 
+
+    
+    
+    
+    
+    
 }
