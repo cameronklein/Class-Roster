@@ -22,7 +22,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveData", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
-        self.initializeArrayFromBackup()
+        self.initializePersonArray()
+        if personArray.isEmpty{
+            self.initializeArrayFromBackup()
+        }
         
         for array in personArray{
             for person in array{
@@ -81,10 +84,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
         
     }
-    
- 
-
-    
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
         
@@ -149,6 +148,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func unwindFromCancelButton(segue: UIStoryboardSegue){/*Do nothing*/}
     
+    
     @IBAction func unwindFromDeletePerson(segue: UIStoryboardSegue){
     
         let sourceViewController: DetailViewController = segue.sourceViewController as DetailViewController
@@ -172,6 +172,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     }
     
+    // Loads plist file in case of regular data file corruption
     
     func initializeArrayFromBackup(){
 

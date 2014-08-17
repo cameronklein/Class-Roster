@@ -30,7 +30,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             personImage.image = thisPerson.image
         }
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEndEditing", name: "UITextFieldTextDidEndEditingNotification", object: nameField)
         self.nameField.delegate = self
     }
     
@@ -39,21 +38,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         super.didReceiveMemoryWarning()
         
-    }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        
-        if segue.identifier? == "TakePhoto" {
-            
-            let pickerController = segue.destinationViewController as UIImagePickerController
-            
-            pickerController.sourceType         =   .Camera
-            pickerController.cameraCaptureMode  =   .Photo
-            pickerController.cameraDevice       =   .Front
-            
-            pickerController.delegate           =   self
-        }
     }
     
     
@@ -76,22 +60,22 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     @IBAction func takePhoto(sender: AnyObject) {
-
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) == USING_SIMULATOR {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) == false{
             
-            let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera", delegate: nil, cancelButtonTitle: "Ok")
+            let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera -- using photo picker instead.", delegate: nil, cancelButtonTitle: "Ok")
             
             myAlertView.show()
             
         } else{
-            
-            let picker = UIImagePickerController()
-            picker.delegate = self
-            picker.allowsEditing = true
+
             picker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker, animated: true, completion: nil)
+            
         }
-        
+        self.presentViewController(picker, animated: true, completion: nil)
     }
     
     

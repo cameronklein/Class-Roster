@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
     var firstName : String?
     var lastName : String?
@@ -26,6 +26,11 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         self.positionPicker.dataSource = self
         self.positionPicker.delegate = self
         
+        self.firstNameField.delegate = self
+        self.lastNameField.delegate = self
+        
+        
+
         
     }
     
@@ -74,6 +79,18 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         if row == 1{
             position = "Teacher"
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        println("should return")
+        
+        if textField == firstNameField{
+            lastNameField.becomeFirstResponder()
+        } else{
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
     
 }
