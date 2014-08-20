@@ -15,7 +15,7 @@ class Person: NSObject, NSCoding{
     var image       :   UIImage?
     var position    :   String?
     
-    
+    //MARK: Initializers
     
     //Initialize with seperate first and last names.
     init(firstName: String, lastName : String){
@@ -41,9 +41,6 @@ class Person: NSObject, NSCoding{
                 }
             self.init(firstName: first, lastName: nameArray.last as String!)
         }
-        
-        
-     
     }
     
     convenience init(firstName: String, lastName: String, image: UIImage, position: String){
@@ -52,35 +49,7 @@ class Person: NSObject, NSCoding{
         self.position   =   position
     }
     
-    
-    //Return full name as one string.
-    func fullName() -> String {
-        return self.firstName + " " + self.lastName
-    }
-    
-    
-    func setFullName(fullName: String){
-        let nameArray = fullName.componentsSeparatedByString(" ")
-        
-        //Handle long names
-        if nameArray.count == 2{
-            self.firstName = nameArray[0]
-            self.lastName = nameArray.last as String!
-        } else{
-            var first = nameArray[0]
-            for i in 1..<(nameArray.count-1) {
-                first = first + " " + nameArray[i]
-            }
-            self.firstName = first
-            self.lastName = nameArray.last as String!
-        }
-    }
-    
-    
-    
-    //
-    //  NSCoding Methods
-    //
+    // MARK: NSCoding
     
     required init(coder aDecoder: NSCoder!) {
         let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
@@ -104,5 +73,36 @@ class Person: NSObject, NSCoding{
         
         
     }
+    
+    func parseNameFromString(fullName: String) -> (String, String){
+        
+        let nameArray = fullName.componentsSeparatedByString(" ")
+        
+        if nameArray.count == 2{
+            return (nameArray[0], nameArray[1])
+        } else{
+            var first = nameArray[0]
+            for i in 1..<(nameArray.count-1) {
+                first = first + " " + nameArray[i]
+            }
+            return (first, nameArray.last as String!)
+        }
+        
+    }
+    
+    //MARK: Other
+    
+    func fullName() -> String {
+        return self.firstName + " " + self.lastName
+    }
+    
+    
+    func setFullName(fullName: String){
+        let (firstName, lastName) = parseNameFromString(fullName)
+        
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+
     
 }

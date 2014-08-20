@@ -10,14 +10,13 @@ import UIKit
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    let USING_SIMULATOR = false
-    
     var thisPerson : Person!
     
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
 
+    //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         
@@ -30,16 +29,18 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             personImage.image = thisPerson.image
         }
         
+        
         self.nameField.delegate = self
+        
+        personImage.layer.cornerRadius = self.personImage.frame.size.width / 2;
+        personImage.clipsToBounds = true
+        personImage.layer.borderColor = UIColor.blackColor().CGColor
+        personImage.layer.borderWidth = 2
     }
-    
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
-        
     }
-    
     
     override func viewWillDisappear(animated: Bool) {
         
@@ -58,6 +59,34 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    //MARK: UIImagePickerControllerDelegate
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
+        let image = info["UIImagePickerControllerEditedImage"] as UIImage
+        
+        thisPerson.image        = image
+        self.personImage.image  = image
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        println("should return")
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //MARK: Other
+    
+    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        nameField.resignFirstResponder()
+    }
     
     @IBAction func takePhoto(sender: AnyObject) {
         let picker = UIImagePickerController()
@@ -65,41 +94,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.allowsEditing = true
         
         if UIImagePickerController.isSourceTypeAvailable(.Camera) == false{
-            
             let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera -- using photo picker instead.", delegate: nil, cancelButtonTitle: "Ok")
-            
             myAlertView.show()
-            
         } else{
-
             picker.sourceType = UIImagePickerControllerSourceType.Camera
-            
         }
         self.presentViewController(picker, animated: true, completion: nil)
-    }
-    
-    
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
-        let image = info["UIImagePickerControllerEditedImage"] as? UIImage
-        
-        thisPerson.image        = image
-        self.personImage.image  = image
-        
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        
-    }
-
-
-    func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
-        println("should return")
-        textField.resignFirstResponder()
-        return true
     }
 
 }
