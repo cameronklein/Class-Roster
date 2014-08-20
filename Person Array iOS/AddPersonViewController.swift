@@ -18,7 +18,7 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var positionPicker: UIPickerView!
     
-    //START Override Functions
+    //MARK: - Override Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +51,7 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         lastName = lastNameField.text
     }
     
+    //MARK: UIPickerViewDataSource/Delegate
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
         return 1
@@ -81,6 +82,8 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         }
     }
     
+    //MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
         println("should return")
         
@@ -92,6 +95,8 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         
         return true
     }
+    
+    //MARK: Other
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
         firstNameField.resignFirstResponder()
