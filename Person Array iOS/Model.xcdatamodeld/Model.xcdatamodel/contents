@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6220.8" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Roster" syncable="YES">
-        <attribute name="person" optional="YES" syncable="YES"/>
-    </entity>
+    <entity name="Roster" syncable="YES"/>
     <elements>
-        <element name="Roster" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="Roster" positionX="-63" positionY="-18" width="128" height="45"/>
     </elements>
 </model>
