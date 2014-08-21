@@ -7,22 +7,22 @@
 //
 
 import UIKit
+import CoreData
 
-class Person: NSObject, NSCoding{
+@objc class Person: NSManagedObject {
     
-    var firstName   :   String
-    var lastName    :   String
-    var image       :   UIImage?
-    var position    :   String?
+    @NSManaged var firstName   :   String
+    @NSManaged var lastName    :   String
+    @NSManaged var image       :   UIImage?
+    @NSManaged var position    :   String?
     
     //MARK: Initializers
     
     //Initialize with seperate first and last names.
-    init(firstName: String, lastName : String){
-        
+    convenience init(firstName: String, lastName : String){
+        self.init()
         self.firstName  =   firstName
         self.lastName   =   lastName
-        super.init()
         
     }
     
@@ -44,26 +44,28 @@ class Person: NSObject, NSCoding{
     }
     
     convenience init(firstName: String, lastName: String, image: UIImage, position: String){
-        self.init(firstName: firstName, lastName: lastName)
+        self.init()
+        self.firstName  =   firstName
+        self.lastName   =   lastName
         self.image      =   image
         self.position   =   position
     }
     
     // MARK: NSCoding
     
-    required init(coder aDecoder: NSCoder) {
-        let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
-        let lastName                =   aDecoder.decodeObjectForKey("lastName")   as String
-        let image: UIImage?         =   aDecoder.decodeObjectForKey("image")      as? UIImage
-        let position: String?       =   aDecoder.decodeObjectForKey("position")   as? String
-        
-        self.firstName  =   firstName
-        self.lastName   =   lastName
-        self.image      =   image
-        self.position   =   position
-     
-        
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
+//        let lastName                =   aDecoder.decodeObjectForKey("lastName")   as String
+//        let image: UIImage?         =   aDecoder.decodeObjectForKey("image")      as? UIImage
+//        let position: String?       =   aDecoder.decodeObjectForKey("position")   as? String
+//        
+//        self.firstName  =   firstName
+//        self.lastName   =   lastName
+//        self.image      =   image
+//        self.position   =   position
+//     
+//        
+//    }
     
     
     func encodeWithCoder(aCoder: NSCoder) {

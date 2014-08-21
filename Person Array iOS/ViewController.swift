@@ -14,12 +14,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
     @IBOutlet weak var tableView: UITableView!
     var personArray = [[Person]]()
-    
+
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
     
         self.initializePersonArray()
 
@@ -31,8 +32,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        personArray[0].sort { $0.firstName < $1.firstName }
-        personArray[1].sort { $0.firstName < $1.firstName }
+//        personArray[0].sort { $0.firstName < $1.firstName }
+//        personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
         saveData()
         
@@ -107,7 +108,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
         var cell = tableView!.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-        var thisPerson = self.personArray[indexPath.section][indexPath.row]
+        var thisPerson = self.personArray[indexPath.section][indexPath.row] as Person
         cell.textLabel.text = thisPerson.fullName()
         
 //        if thisPerson.image != nil{
@@ -154,10 +155,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func initializePersonArray(){
         
-        personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
-        if personArray.isEmpty{
+//        personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
+//        
+ //       if personArray.isEmpty{
             self.initializeArrayFromBackup()
-        }
+//        }
         
     }
     
@@ -179,6 +181,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var teacherArray = [Person]()
         var studentArray = [Person]()
         
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext
+        
         for person in array{
             
             var thisFirst = person["firstName"] as String
@@ -194,10 +199,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             
         }
-        studentArray.sort { $0.firstName < $1.firstName }
-        teacherArray.sort { $0.firstName < $1.firstName }
-        self.personArray.append(studentArray)
-        self.personArray.append(teacherArray)
+          studentArray.sort { $0.firstName < $1.firstName }
+          teacherArray.sort { $0.firstName < $1.firstName }
+            self.personArray.append(studentArray)
+            self.personArray.append(teacherArray)
         
         
     }
