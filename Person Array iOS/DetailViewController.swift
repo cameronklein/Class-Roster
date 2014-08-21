@@ -32,7 +32,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         self.nameField.delegate = self
         
-        personImage.layer.cornerRadius = self.personImage.frame.size.width / 2;
+        
         personImage.clipsToBounds = true
         personImage.layer.borderColor = UIColor.blackColor().CGColor
         personImage.layer.borderWidth = 2
@@ -57,6 +57,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             thisPerson.setFullName(nameField.text)
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        personImage.layer.cornerRadius = self.personImage.frame.size.width / 2;
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -89,17 +93,31 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
+        
         let picker = UIImagePickerController()
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.delegate = self
         picker.allowsEditing = true
         
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) == false{
-            let myAlertView = UIAlertView(title: "Error!", message: "Device does not have camera -- using photo picker instead.", delegate: nil, cancelButtonTitle: "Ok")
-            myAlertView.show()
-        } else{
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+        
+        var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.presentViewController(picker, animated: true, completion: nil)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            self.presentViewController(picker, animated: true, completion: nil)
+        }))
+        
+        self.presentViewController(actionSheet, animated: true, completion: nil)
+        } else{
+            self.presentViewController(picker, animated: true, completion: nil)
         }
-        self.presentViewController(picker, animated: true, completion: nil)
     }
 
-}
+
+    
+    }

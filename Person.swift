@@ -69,7 +69,7 @@ class Person: NSObject, NSCoding{
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.firstName, forKey: "firstName")
         aCoder.encodeObject(self.lastName, forKey: "lastName")
-        aCoder.encodeObject(self.image!, forKey: "image")
+        aCoder.encodeObject(self.image, forKey: "image")
         aCoder.encodeObject(self.position!, forKey: "position")
         
         
