@@ -20,6 +20,8 @@
 		7EC794171993FDC7006A054F /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC794161993FDC7006A054F /* Person.swift */; };
 		7EC7941B199409D0006A054F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7941A199409D0006A054F /* ViewController.swift */; };
 		7EC7941D19940EA2006A054F /* Roster.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC7941C19940EA2006A054F /* Roster.plist */; };
+		7EF6B3C319A5BB550060C5E0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF6B3C219A5BB550060C5E0 /* CoreData.framework */; };
+		7EF6B3F419A5BE5A0060C5E0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		7EC794161993FDC7006A054F /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
 		7EC7941A199409D0006A054F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7EC7941C19940EA2006A054F /* Roster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Roster.plist; sourceTree = "<group>"; };
+		7EF6B3C219A5BB550060C5E0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EF6B3C319A5BB550060C5E0 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +78,7 @@
 		7EC793EB1993FDB7006A054F = {
 			isa = PBXGroup;
 			children = (
+				7EF6B3C219A5BB550060C5E0 /* CoreData.framework */,
 				7EC793F61993FDB7006A054F /* Person Array iOS */,
 				7EC794091993FDB8006A054F /* Person Array iOSTests */,
 				7EC793F51993FDB7006A054F /* Products */,
@@ -92,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				7EC7941A199409D0006A054F /* ViewController.swift */,
+				7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */,
 				7E5D8B631999D5D40031F72E /* DetailViewController.swift */,
 				7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */,
 				7EC794161993FDC7006A054F /* Person.swift */,
@@ -242,6 +249,7 @@
 				7EC794171993FDC7006A054F /* Person.swift in Sources */,
 				7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */,
 				7E8AD327199D301C0054BB3C /* AddPersonViewController.swift in Sources */,
+				7EF6B3F419A5BE5A0060C5E0 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +449,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */,
+			);
+			currentVersion = 7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7EC793EC1993FDB7006A054F /* Project object */;
 }
