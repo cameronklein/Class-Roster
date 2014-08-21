@@ -54,31 +54,6 @@ class Person: NSManagedObject {
         self.position   =   position
     }
     
-    // MARK: NSCoding
-    
-//    required init(coder aDecoder: NSCoder) {
-//        let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
-//        let lastName                =   aDecoder.decodeObjectForKey("lastName")   as String
-//        let image: UIImage?         =   aDecoder.decodeObjectForKey("image")      as? UIImage
-//        let position: String?       =   aDecoder.decodeObjectForKey("position")   as? String
-//        
-//        self.firstName  =   firstName
-//        self.lastName   =   lastName
-//        self.image      =   image
-//        self.position   =   position
-//     
-//        
-//    }
-    
-    
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.firstName, forKey: "firstName")
-        aCoder.encodeObject(self.lastName, forKey: "lastName")
-        aCoder.encodeObject(self.image, forKey: "image")
-        aCoder.encodeObject(self.position!, forKey: "position")
-        
-    }
-    
     func parseNameFromString(fullName: String) -> (String, String){
         
         let nameArray = fullName.componentsSeparatedByString(" ")

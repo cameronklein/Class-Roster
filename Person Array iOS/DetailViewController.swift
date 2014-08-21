@@ -24,14 +24,22 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         nameField.text      = thisPerson.fullName()
         studentLabel.text   = thisPerson.position
+  
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let fullPath = documentsDirectory + thisPerson.imagePath
         
-        if thisPerson.image != nil{
-            personImage.image = thisPerson.image
+        let image = UIImage(contentsOfFile: fullPath)
+            
+        if image != nil{
+            personImage.image = image
         }
         
         
-        self.nameField.delegate = self
         
+        println(fullPath)
+        
+        self.nameField.delegate = self
         
         personImage.clipsToBounds = true
         personImage.layer.borderColor = UIColor.blackColor().CGColor
@@ -74,6 +82,30 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.personImage.image  = image
         
         picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        
+        thisPerson.imagePath = "/\(thisPerson.firstName)\(thisPerson.lastName).png"
+        let fullPath = documentsDirectory + thisPerson.imagePath
+    
+        println(fullPath)
+        
+        if UIImagePNGRepresentation(image).writeToFile(fullPath, atomically: true){
+            println("Image Saved")
+         }
+        
+        var writeError: NSError?
+        let written = UIImagePNGRepresentation(image).writeToFile(fullPath, options: nil,
+            error: &writeError)
+    
+        if !written {
+            if let error = writeError {
+                println("write failure: \(error.localizedDescription)")
+            }
+        }
+    
+        
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController!) {

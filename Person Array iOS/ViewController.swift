@@ -35,15 +35,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
         
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
-        context.save(nil)
+        saveData()
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //MARK: Unwind Methods
@@ -87,11 +84,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var context  : NSManagedObjectContext =  appDel.managedObjectContext!
         
         context.deleteObject(thisPerson)
-        println(context.deletedObjects)
-
-        //personArray.removeAll(keepCapacity: true)
-        //initializePersonArray()
-        //context.save(nil)
     
     }
     
@@ -150,15 +142,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func getFilePathOfData() -> String{
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let dir = paths[0] as String
-        let fullPath = dir + "/People"
-        
-        return fullPath
-    }
-    
     func initializePersonArray(){
         
         var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
@@ -171,11 +154,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         request.predicate = NSPredicate(format: "position == %@", "Student")
         var studentArray = context.executeFetchRequest(request, error: nil) as [Person]
-        personArray.append(studentArray)
+        if studentArray.isEmpty == false{
+            personArray.append(studentArray)
+        }
         
         request.predicate = NSPredicate(format: "position == %@", "Teacher")
         var teacherArray = context.executeFetchRequest(request, error: nil) as [Person]
-        personArray.append(teacherArray)
+        if teacherArray.isEmpty == false{
+            personArray.append(teacherArray)
+        }
         
         if personArray.isEmpty{
             self.initializeArrayFromBackup()
@@ -213,6 +200,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             thisPerson.setValue(person["lastName"]  , forKey: "lastName")
             thisPerson.setValue(person["position"]  , forKey: "position")
             thisPerson.setValue(person["image"]     , forKey: "imagePath")
+            thisPerson.setValue(nil                 , forKey: "image")
             
             context.save(nil)
             println(thisPerson)
