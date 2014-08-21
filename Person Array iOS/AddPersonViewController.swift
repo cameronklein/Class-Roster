@@ -29,9 +29,6 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
         self.firstNameField.delegate = self
         self.lastNameField.delegate = self
         
-        
-
-        
     }
     
     

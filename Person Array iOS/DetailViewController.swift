@@ -65,6 +65,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     //MARK: UIImagePickerControllerDelegate
+    //TODO: Save Context
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
         let image = info["UIImagePickerControllerEditedImage"] as UIImage

@@ -30,10 +30,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+        self.initializePersonArray()
         personArray[0].sort { $0.firstName < $1.firstName }
         personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
-        saveData()
+        
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        context.save(nil)
         
     }
     
@@ -53,27 +57,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let position    =   sourceViewController.position as String
         let imagePath       =   " "
         
-        //let newPerson = Person(firstName: firstName!, lastName: lastName!, imagePath: imagePath, position: position)
-        
         var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
         var context  : NSManagedObjectContext =  appDel.managedObjectContext!
         
         var newPerson = NSEntityDescription.insertNewObjectForEntityForName("People", inManagedObjectContext: context) as Person
         
-        newPerson.firstName = firstName!
-        newPerson.lastName = lastName!
-        newPerson.imagePath = imagePath
-        newPerson.position = position
-        
+        newPerson.firstName     = firstName!
+        newPerson.lastName      = lastName!
+        newPerson.imagePath     = imagePath
+        newPerson.position      = position
+
         context.save(nil)
+        initializePersonArray() 
         
-        
-        
-        
+        println(newPerson.fullName())
         
     }
     
     @IBAction func unwindFromCancelButton(segue: UIStoryboardSegue){/*Do nothing*/}
+    
     
     @IBAction func unwindFromDeletePerson(segue: UIStoryboardSegue){
     
@@ -81,10 +83,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let thisPerson : Person = sourceViewController.thisPerson
         
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var appDel   : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
         var context  : NSManagedObjectContext =  appDel.managedObjectContext!
         
         context.deleteObject(thisPerson)
+        println(context.deletedObjects)
+
+        //personArray.removeAll(keepCapacity: true)
+        //initializePersonArray()
+        //context.save(nil)
     
     }
     
@@ -160,6 +167,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var request = NSFetchRequest(entityName: "People")
         request.returnsObjectsAsFaults = false
         
+        personArray.removeAll(keepCapacity: true)
+        
         request.predicate = NSPredicate(format: "position == %@", "Student")
         var studentArray = context.executeFetchRequest(request, error: nil) as [Person]
         personArray.append(studentArray)
@@ -192,7 +201,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var teacherArray = [Person]()
         var studentArray = [Person]()
         
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var appDel   : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
         var context  : NSManagedObjectContext =  appDel.managedObjectContext!
         
         
