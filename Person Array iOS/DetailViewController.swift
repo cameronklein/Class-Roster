@@ -36,6 +36,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         personImage.clipsToBounds = true
         personImage.layer.borderColor = UIColor.blackColor().CGColor
         personImage.layer.borderWidth = 2
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,7 +60,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewWillLayoutSubviews() {
         personImage.layer.cornerRadius = self.personImage.frame.size.width / 2;
     }
     
