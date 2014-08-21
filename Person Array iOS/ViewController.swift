@@ -18,8 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveData", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+
     
         self.initializePersonArray()
 
@@ -174,7 +173,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func initializeArrayFromBackup(){
         
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
-        let array = NSArray(contentsOfFile:path)
+        let array = NSArray(contentsOfFile:path!)
         
         var teacherArray = [Person]()
         var studentArray = [Person]()

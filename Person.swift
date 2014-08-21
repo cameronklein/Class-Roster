@@ -51,7 +51,7 @@ class Person: NSObject, NSCoding{
     
     // MARK: NSCoding
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         let firstName               =   aDecoder.decodeObjectForKey("firstName")  as String
         let lastName                =   aDecoder.decodeObjectForKey("lastName")   as String
         let image: UIImage?         =   aDecoder.decodeObjectForKey("image")      as? UIImage
@@ -65,11 +65,12 @@ class Person: NSObject, NSCoding{
         
     }
     
-    func encodeWithCoder(aCoder: NSCoder!) {
+    
+    func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.firstName, forKey: "firstName")
         aCoder.encodeObject(self.lastName, forKey: "lastName")
-        aCoder.encodeObject(self.image, forKey: "image")
-        aCoder.encodeObject(self.position, forKey: "position")
+        aCoder.encodeObject(self.image!, forKey: "image")
+        aCoder.encodeObject(self.position!, forKey: "position")
         
         
     }
