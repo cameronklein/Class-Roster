@@ -9,12 +9,15 @@
 import UIKit
 import CoreData
 
-@objc class Person: NSManagedObject {
+@objc(Person)
+class Person: NSManagedObject {
     
-    @NSManaged var firstName   :   String
-    @NSManaged var lastName    :   String
-    @NSManaged var image       :   UIImage?
-    @NSManaged var position    :   String?
+    @NSManaged var firstName    :   String
+    @NSManaged var lastName     :   String
+    @NSManaged var imagePath    :   String
+    @NSManaged var position     :   String?
+    
+    var image       :   UIImage?
     
     //MARK: Initializers
     
@@ -43,11 +46,11 @@ import CoreData
         }
     }
     
-    convenience init(firstName: String, lastName: String, image: UIImage, position: String){
+    convenience init(firstName: String, lastName: String, imagePath: String, position: String){
         self.init()
         self.firstName  =   firstName
         self.lastName   =   lastName
-        self.image      =   image
+        self.imagePath  =   imagePath
         self.position   =   position
     }
     
@@ -73,7 +76,6 @@ import CoreData
         aCoder.encodeObject(self.lastName, forKey: "lastName")
         aCoder.encodeObject(self.image, forKey: "image")
         aCoder.encodeObject(self.position!, forKey: "position")
-        
         
     }
     

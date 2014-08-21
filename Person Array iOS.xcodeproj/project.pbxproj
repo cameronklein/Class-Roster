@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E5D8B641999D5D40031F72E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D8B631999D5D40031F72E /* DetailViewController.swift */; };
+		7E6216E919A5D4AD00B72B1A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E6216E719A5D4AD00B72B1A /* Model.xcdatamodeld */; };
 		7E8AD327199D301C0054BB3C /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */; };
 		7E8CEF051999EF6600E93046 /* unknownSilhouette.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEF041999EF6600E93046 /* unknownSilhouette.png */; };
 		7E8CEF07199A6B3400E93046 /* cameron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEF06199A6B3400E93046 /* cameron.jpg */; };
@@ -21,7 +22,6 @@
 		7EC7941B199409D0006A054F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7941A199409D0006A054F /* ViewController.swift */; };
 		7EC7941D19940EA2006A054F /* Roster.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC7941C19940EA2006A054F /* Roster.plist */; };
 		7EF6B3C319A5BB550060C5E0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF6B3C219A5BB550060C5E0 /* CoreData.framework */; };
-		7EF6B3F419A5BE5A0060C5E0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		7E5D8B631999D5D40031F72E /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		7E6216E819A5D4AD00B72B1A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 		7E8CEF041999EF6600E93046 /* unknownSilhouette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknownSilhouette.png; sourceTree = "<group>"; };
 		7E8CEF06199A6B3400E93046 /* cameron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cameron.jpg; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		7EC7941A199409D0006A054F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7EC7941C19940EA2006A054F /* Roster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Roster.plist; sourceTree = "<group>"; };
 		7EF6B3C219A5BB550060C5E0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +78,7 @@
 		7EC793EB1993FDB7006A054F = {
 			isa = PBXGroup;
 			children = (
+				7E6216E719A5D4AD00B72B1A /* Model.xcdatamodeld */,
 				7EF6B3C219A5BB550060C5E0 /* CoreData.framework */,
 				7EC793F61993FDB7006A054F /* Person Array iOS */,
 				7EC794091993FDB8006A054F /* Person Array iOSTests */,
@@ -98,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				7EC7941A199409D0006A054F /* ViewController.swift */,
-				7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */,
 				7E5D8B631999D5D40031F72E /* DetailViewController.swift */,
 				7E8AD326199D301C0054BB3C /* AddPersonViewController.swift */,
 				7EC794161993FDC7006A054F /* Person.swift */,
@@ -249,7 +249,7 @@
 				7EC794171993FDC7006A054F /* Person.swift in Sources */,
 				7EC793FA1993FDB7006A054F /* AppDelegate.swift in Sources */,
 				7E8AD327199D301C0054BB3C /* AddPersonViewController.swift in Sources */,
-				7EF6B3F419A5BE5A0060C5E0 /* Model.xcdatamodeld in Sources */,
+				7E6216E919A5D4AD00B72B1A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,12 +451,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		7EF6B3F219A5BE5A0060C5E0 /* Model.xcdatamodeld */ = {
+		7E6216E719A5D4AD00B72B1A /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */,
+				7E6216E819A5D4AD00B72B1A /* Model.xcdatamodel */,
 			);
-			currentVersion = 7EF6B3F319A5BE5A0060C5E0 /* Model.xcdatamodel */;
+			currentVersion = 7E6216E819A5D4AD00B72B1A /* Model.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

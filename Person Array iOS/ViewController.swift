@@ -20,8 +20,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-    
         self.initializePersonArray()
 
         self.tableView.dataSource = self;
@@ -32,8 +30,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-//        personArray[0].sort { $0.firstName < $1.firstName }
-//        personArray[1].sort { $0.firstName < $1.firstName }
+        personArray[0].sort { $0.firstName < $1.firstName }
+        personArray[1].sort { $0.firstName < $1.firstName }
         tableView.reloadData()
         saveData()
         
@@ -53,15 +51,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let firstName   =   sourceViewController.firstName
         let lastName    =   sourceViewController.lastName
         let position    =   sourceViewController.position as String
-        let image       =   UIImage(named: " ") as UIImage
+        let imagePath       =   " "
         
-        if position == "Student"{
-            personArray[0].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Student"))
-            println("New student \(firstName!) \(lastName!) added!")
-        } else if position == "Teacher"{
-            personArray[1].append(Person(firstName: firstName!, lastName: lastName!, image: image, position: "Teacher"))
-            println("New teacher \(firstName!) \(lastName!) added!")
-        }
+        //let newPerson = Person(firstName: firstName!, lastName: lastName!, imagePath: imagePath, position: position)
+        
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        
+        var newPerson = NSEntityDescription.insertNewObjectForEntityForName("People", inManagedObjectContext: context) as Person
+        
+        newPerson.firstName = firstName!
+        newPerson.lastName = lastName!
+        newPerson.imagePath = imagePath
+        newPerson.position = position
+        
+        context.save(nil)
+        
+        
+        
+        
+        
     }
     
     @IBAction func unwindFromCancelButton(segue: UIStoryboardSegue){/*Do nothing*/}
@@ -71,21 +80,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let sourceViewController: DetailViewController = segue.sourceViewController as DetailViewController
         
         let thisPerson : Person = sourceViewController.thisPerson
-        let name = thisPerson.fullName()
-        var i = 0
         
-        for array in personArray{
-            var j = 0
-            for person in array{
-                if person == thisPerson{
-                    personArray[i].removeAtIndex(j)
-                    println("\(name) removed from roster.")
-                    break
-                }
-              j++
-            }
-            i++
-        }
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        
+        context.deleteObject(thisPerson)
     
     }
     
@@ -155,20 +154,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func initializePersonArray(){
         
-//        personArray = NSKeyedUnarchiver.unarchiveObjectWithFile(self.getFilePathOfData()) as [[Person]]
-//        
- //       if personArray.isEmpty{
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        
+        var request = NSFetchRequest(entityName: "People")
+        request.returnsObjectsAsFaults = false
+        
+        request.predicate = NSPredicate(format: "position == %@", "Student")
+        var studentArray = context.executeFetchRequest(request, error: nil) as [Person]
+        personArray.append(studentArray)
+        
+        request.predicate = NSPredicate(format: "position == %@", "Teacher")
+        var teacherArray = context.executeFetchRequest(request, error: nil) as [Person]
+        personArray.append(teacherArray)
+        
+        if personArray.isEmpty{
             self.initializeArrayFromBackup()
-//        }
+        }
         
     }
     
     func saveData(){
-        let newPersonArray = personArray as NSArray
-        let filePath = self.getFilePathOfData()
-        var success = NSKeyedArchiver.archiveRootObject(newPersonArray, toFile: filePath)
+
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
         
-        if success{
+        if context.save(nil){
             println("Data Successfully Saved")
         }
     }
@@ -182,29 +193,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var studentArray = [Person]()
         
         var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        
         
         for person in array{
+        
+            var thisPerson: AnyObject! = NSEntityDescription.insertNewObjectForEntityForName("People", inManagedObjectContext: context)
             
-            var thisFirst = person["firstName"] as String
-            var thisLast = person["lastName"] as String
-            var imagePath = person["image"] as String
-            var thisImage = UIImage(named: imagePath) as UIImage
-            var thisPosition = person["position"] as String
-            var thisPerson = Person(firstName: thisFirst, lastName: thisLast, image: thisImage, position: thisPosition)
-            if thisPosition == "Teacher"{
-                teacherArray.append(thisPerson)
-            } else if thisPosition == "Student"{
-                studentArray.append(thisPerson)
-            }
+            thisPerson.setValue(person["firstName"] , forKey: "firstName")
+            thisPerson.setValue(person["lastName"]  , forKey: "lastName")
+            thisPerson.setValue(person["position"]  , forKey: "position")
+            thisPerson.setValue(person["image"]     , forKey: "imagePath")
+            
+            context.save(nil)
+            println(thisPerson)
             
         }
-          studentArray.sort { $0.firstName < $1.firstName }
-          teacherArray.sort { $0.firstName < $1.firstName }
-            self.personArray.append(studentArray)
-            self.personArray.append(teacherArray)
-        
-        
     }
 
 
