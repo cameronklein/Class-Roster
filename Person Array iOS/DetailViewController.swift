@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
 
+    @IBOutlet weak var cameraButton: UIButton!
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
@@ -25,16 +26,15 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         nameField.text      = thisPerson.fullName()
         studentLabel.text   = thisPerson.position
   
-        let documentsDirectory = getFilePath()
-        let fullPath = documentsDirectory + thisPerson.imagePath
+        let path = getFilePath() + thisPerson.imagePath
         
-        let image = UIImage(contentsOfFile: fullPath)
+        let image = UIImage(contentsOfFile: path)
             
         if image != nil{
             personImage.image = image
         }
-
-        println(fullPath)
+        
+        self.cameraButton.alpha = 0.0
         
         self.nameField.delegate = self
         
@@ -42,6 +42,11 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         personImage.layer.borderColor = UIColor.blackColor().CGColor
         personImage.layer.borderWidth = 2
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        animateImage()
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,10 +83,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        let documentsDirectory = getFilePath() as String
-        
         thisPerson.imagePath = "/\(thisPerson.firstName)\(thisPerson.lastName).png"
-        let fullPath = documentsDirectory + thisPerson.imagePath
+        let fullPath = getFilePath() + thisPerson.imagePath
     
         println(fullPath)
         
@@ -137,6 +140,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             
             var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
             actionSheet.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 picker.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(picker, animated: true, completion: nil)
@@ -147,13 +151,24 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                 self.presentViewController(picker, animated: true, completion: nil)
             }))
             
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+                actionSheet.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            
             self.presentViewController(actionSheet, animated: true, completion: nil)
             
         } else{
             self.presentViewController(picker, animated: true, completion: nil)
         }
     }
-
+    
+    func animateImage(){
+        var full = CGFloat(M_PI)
+        UIView.animateWithDuration(2.0, animations: { () -> Void in
+            self.cameraButton.alpha = 1.0
+        })
+    }
 
     
-    }
+}

@@ -448,6 +448,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="XLT-ok-duH"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraButton" destination="yAj-Ph-Nnx" id="RSq-js-C5U"/>
                         <outlet property="nameField" destination="0Qb-1H-ZlO" id="C02-tc-fJB"/>
                         <outlet property="personImage" destination="c4h-DW-LRM" id="plt-W7-opR"/>
                         <outlet property="studentLabel" destination="nxP-DW-Jn7" id="Ivc-I0-qQb"/>
