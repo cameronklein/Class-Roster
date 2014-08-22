@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Person Array iOS.xcodeproj">
+      location = "self:Roster.xcodeproj">
    </FileRef>
 </Workspace>

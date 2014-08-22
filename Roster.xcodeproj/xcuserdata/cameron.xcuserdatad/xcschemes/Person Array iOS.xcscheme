@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7EC793F31993FDB7006A054F"
-               BuildableName = "Person Array iOS.app"
-               BlueprintName = "Person Array iOS"
-               ReferencedContainer = "container:Person Array iOS.xcodeproj">
+               BuildableName = "Roster.app"
+               BlueprintName = "Roster"
+               ReferencedContainer = "container:Roster.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7EC794051993FDB8006A054F"
-               BuildableName = "Person Array iOSTests.xctest"
-               BlueprintName = "Person Array iOSTests"
-               ReferencedContainer = "container:Person Array iOS.xcodeproj">
+               BuildableName = "RosterTests.xctest"
+               BlueprintName = "RosterTests"
+               ReferencedContainer = "container:Roster.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7EC794051993FDB8006A054F"
-               BuildableName = "Person Array iOSTests.xctest"
-               BlueprintName = "Person Array iOSTests"
-               ReferencedContainer = "container:Person Array iOS.xcodeproj">
+               BuildableName = "RosterTests.xctest"
+               BlueprintName = "RosterTests"
+               ReferencedContainer = "container:Roster.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7EC793F31993FDB7006A054F"
-            BuildableName = "Person Array iOS.app"
-            BlueprintName = "Person Array iOS"
-            ReferencedContainer = "container:Person Array iOS.xcodeproj">
+            BuildableName = "Roster.app"
+            BlueprintName = "Roster"
+            ReferencedContainer = "container:Roster.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7EC793F31993FDB7006A054F"
-            BuildableName = "Person Array iOS.app"
-            BlueprintName = "Person Array iOS"
-            ReferencedContainer = "container:Person Array iOS.xcodeproj">
+            BuildableName = "Roster.app"
+            BlueprintName = "Roster"
+            ReferencedContainer = "container:Roster.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7EC793F31993FDB7006A054F"
-            BuildableName = "Person Array iOS.app"
-            BlueprintName = "Person Array iOS"
-            ReferencedContainer = "container:Person Array iOS.xcodeproj">
+            BuildableName = "Roster.app"
+            BlueprintName = "Roster"
+            ReferencedContainer = "container:Roster.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

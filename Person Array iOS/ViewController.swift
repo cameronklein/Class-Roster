@@ -126,6 +126,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         UIGraphicsEndImageContext()
         
         cell.imageView.image = newImage
+    
 
         cell.imageView.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         cell.imageView.clipsToBounds = true

@@ -44,12 +44,12 @@
 		7E8CEF06199A6B3400E93046 /* cameron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cameron.jpg; sourceTree = "<group>"; };
 		7EBCBFCC19A58C1700446922 /* blackline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackline.png; sourceTree = "<group>"; };
 		7EBCBFCE19A58DFD00446922 /* Blue-Gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue-Gradient.png"; sourceTree = "<group>"; };
-		7EC793F41993FDB7006A054F /* Person Array iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person Array iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EC793F41993FDB7006A054F /* Roster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC793F81993FDB7006A054F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EC793F91993FDB7006A054F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EC793FE1993FDB7006A054F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7EC794001993FDB7006A054F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7EC794061993FDB8006A054F /* Person Array iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Person Array iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EC794061993FDB8006A054F /* RosterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RosterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC7940B1993FDB8006A054F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EC7940C1993FDB8006A054F /* Person_Array_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_Array_iOSTests.swift; sourceTree = "<group>"; };
 		7EC794161993FDC7006A054F /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
@@ -91,8 +91,8 @@
 		7EC793F51993FDB7006A054F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7EC793F41993FDB7006A054F /* Person Array iOS.app */,
-				7EC794061993FDB8006A054F /* Person Array iOSTests.xctest */,
+				7EC793F41993FDB7006A054F /* Roster.app */,
+				7EC794061993FDB8006A054F /* RosterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,9 +146,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7EC793F31993FDB7006A054F /* Person Array iOS */ = {
+		7EC793F31993FDB7006A054F /* Roster */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7EC794101993FDB8006A054F /* Build configuration list for PBXNativeTarget "Person Array iOS" */;
+			buildConfigurationList = 7EC794101993FDB8006A054F /* Build configuration list for PBXNativeTarget "Roster" */;
 			buildPhases = (
 				7EC793F01993FDB7006A054F /* Sources */,
 				7EC793F11993FDB7006A054F /* Frameworks */,
@@ -158,14 +158,14 @@
 			);
 			dependencies = (
 			);
-			name = "Person Array iOS";
+			name = Roster;
 			productName = "Person Array iOS";
-			productReference = 7EC793F41993FDB7006A054F /* Person Array iOS.app */;
+			productReference = 7EC793F41993FDB7006A054F /* Roster.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7EC794051993FDB8006A054F /* Person Array iOSTests */ = {
+		7EC794051993FDB8006A054F /* RosterTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7EC794131993FDB8006A054F /* Build configuration list for PBXNativeTarget "Person Array iOSTests" */;
+			buildConfigurationList = 7EC794131993FDB8006A054F /* Build configuration list for PBXNativeTarget "RosterTests" */;
 			buildPhases = (
 				7EC794021993FDB8006A054F /* Sources */,
 				7EC794031993FDB8006A054F /* Frameworks */,
@@ -176,9 +176,9 @@
 			dependencies = (
 				7EC794081993FDB8006A054F /* PBXTargetDependency */,
 			);
-			name = "Person Array iOSTests";
+			name = RosterTests;
 			productName = "Person Array iOSTests";
-			productReference = 7EC794061993FDB8006A054F /* Person Array iOSTests.xctest */;
+			productReference = 7EC794061993FDB8006A054F /* RosterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7EC793EF1993FDB7006A054F /* Build configuration list for PBXProject "Person Array iOS" */;
+			buildConfigurationList = 7EC793EF1993FDB7006A054F /* Build configuration list for PBXProject "Roster" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -212,8 +212,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7EC793F31993FDB7006A054F /* Person Array iOS */,
-				7EC794051993FDB8006A054F /* Person Array iOSTests */,
+				7EC793F31993FDB7006A054F /* Roster */,
+				7EC794051993FDB8006A054F /* RosterTests */,
 			);
 		};
 /* End PBXProject section */
@@ -270,7 +270,7 @@
 /* Begin PBXTargetDependency section */
 		7EC794081993FDB8006A054F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7EC793F31993FDB7006A054F /* Person Array iOS */;
+			target = 7EC793F31993FDB7006A054F /* Roster */;
 			targetProxy = 7EC794071993FDB8006A054F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -373,7 +373,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Person Array iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Roster;
 			};
 			name = Debug;
 		};
@@ -384,7 +384,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Person Array iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Roster;
 			};
 			name = Release;
 		};
@@ -402,7 +402,7 @@
 				);
 				INFOPLIST_FILE = "Person Array iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RosterTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Person Array iOS.app/Person Array iOS";
 			};
 			name = Debug;
@@ -417,7 +417,7 @@
 				);
 				INFOPLIST_FILE = "Person Array iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RosterTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Person Array iOS.app/Person Array iOS";
 			};
 			name = Release;
@@ -425,7 +425,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7EC793EF1993FDB7006A054F /* Build configuration list for PBXProject "Person Array iOS" */ = {
+		7EC793EF1993FDB7006A054F /* Build configuration list for PBXProject "Roster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EC7940E1993FDB8006A054F /* Debug */,
@@ -434,7 +434,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7EC794101993FDB8006A054F /* Build configuration list for PBXNativeTarget "Person Array iOS" */ = {
+		7EC794101993FDB8006A054F /* Build configuration list for PBXNativeTarget "Roster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EC794111993FDB8006A054F /* Debug */,
@@ -443,7 +443,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7EC794131993FDB8006A054F /* Build configuration list for PBXNativeTarget "Person Array iOSTests" */ = {
+		7EC794131993FDB8006A054F /* Build configuration list for PBXNativeTarget "RosterTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EC794141993FDB8006A054F /* Debug */,
