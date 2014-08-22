@@ -31,8 +31,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         super.viewWillAppear(animated)
         self.initializePersonArray()
-        personArray[0].sort { $0.firstName < $1.firstName }
-        personArray[1].sort { $0.firstName < $1.firstName }
+        
         tableView.reloadData()
         
         saveData()
@@ -41,6 +40,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        
+        if segue.identifier! == "Detail" {
+            let index = tableView.indexPathForSelectedRow()
+            let selectedPerson = personArray[index.section][index.row]
+            let destination = segue.destinationViewController as DetailViewController
+            destination.thisPerson = selectedPerson
+        }
     }
     
     //MARK: Unwind Methods
@@ -54,8 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let position    =   sourceViewController.position as String
         let imagePath       =   " "
         
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        var context  : NSManagedObjectContext = getContext()
         
         var newPerson = NSEntityDescription.insertNewObjectForEntityForName("People", inManagedObjectContext: context) as Person
         
@@ -64,10 +72,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         newPerson.imagePath     = imagePath
         newPerson.position      = position
 
-        context.save(nil)
+        saveData()
         initializePersonArray() 
         
-        println(newPerson.fullName())
+        println(newPerson.fullName() + "added.")
         
     }
     
@@ -77,14 +85,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func unwindFromDeletePerson(segue: UIStoryboardSegue){
     
         let sourceViewController: DetailViewController = segue.sourceViewController as DetailViewController
-        
         let thisPerson : Person = sourceViewController.thisPerson
-        
-        var appDel   : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
-        
+        var context  : NSManagedObjectContext = getContext()
         context.deleteObject(thisPerson)
-    
+        println(thisPerson.fullName() + "deleted.")
     }
     
     
@@ -109,30 +113,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var thisPerson = self.personArray[indexPath.section][indexPath.row] as Person
         cell.textLabel.text = thisPerson.fullName()
         
-        let documentsDirectory = getFilePath()
-        let fullPath = documentsDirectory + thisPerson.imagePath
+        let path = getFilePath() + thisPerson.imagePath
         
-        var image = UIImage(contentsOfFile: fullPath)
+        var image = UIImage(contentsOfFile: path)
         
         if image == nil{
             image = UIImage(named: "unknownSilhouette")
         }
         
-        UIGraphicsBeginImageContext(CGSizeMake(40.0, 40.0))
-        
-        image.drawInRect(CGRectMake(0.0, 0.0, 40.0, 40.0))
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        cell.imageView.image = newImage
+        cell.imageView.image = getSmallImagefromBigImage(image)
     
 
         cell.imageView.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         cell.imageView.clipsToBounds = true
         cell.imageView.layer.borderColor = UIColor.blackColor().CGColor
         cell.imageView.layer.borderWidth = 1
-        
         cell.imageView.layer.cornerRadius = cell.imageView.frame.size.height / 2.0
         
         return cell
@@ -155,24 +150,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
        
     }
     
+    //MARK: CoreData
     
+    func getContext() -> NSManagedObjectContext {
+        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
+        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        return context
+    }
     
-    //MARK: Other
-    
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    func saveData(){
         
-        if segue.identifier! == "Detail" {
-            let index = tableView.indexPathForSelectedRow()
-            let selectedPerson = personArray[index.section][index.row]
-            let destination = segue.destinationViewController as DetailViewController
-            destination.thisPerson = selectedPerson
+        if getContext().save(nil){
+            println("Data Successfully Saved")
         }
     }
     
+    //MARK: Other
+    
     func initializePersonArray(){
         
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
+        var context  : NSManagedObjectContext = getContext()
         
         var request = NSFetchRequest(entityName: "People")
         request.returnsObjectsAsFaults = false
@@ -181,12 +178,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         request.predicate = NSPredicate(format: "position == %@", "Student")
         var studentArray = context.executeFetchRequest(request, error: nil) as [Person]
+        studentArray.sort { $0.firstName < $1.firstName }
+        
         if studentArray.isEmpty == false{
             personArray.append(studentArray)
         }
         
         request.predicate = NSPredicate(format: "position == %@", "Teacher")
         var teacherArray = context.executeFetchRequest(request, error: nil) as [Person]
+        teacherArray.sort { $0.firstName < $1.firstName }
+        
         if teacherArray.isEmpty == false{
             personArray.append(teacherArray)
         }
@@ -197,16 +198,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func saveData(){
-
-        var appDel : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
-        
-        if context.save(nil){
-            println("Data Successfully Saved")
-        }
-    }
-    
     func initializeArrayFromBackup(){
         
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
@@ -215,12 +206,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var teacherArray = [Person]()
         var studentArray = [Person]()
         
-        var appDel   : AppDelegate =  UIApplication.sharedApplication().delegate as AppDelegate
-        var context  : NSManagedObjectContext =  appDel.managedObjectContext!
-        
+        var context  : NSManagedObjectContext =  getContext()
         
         for person in array{
-        
+            
             var thisPerson: AnyObject! = NSEntityDescription.insertNewObjectForEntityForName("People", inManagedObjectContext: context)
             
             thisPerson.setValue(person["firstName"] , forKey: "firstName")
@@ -228,12 +217,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             thisPerson.setValue(person["position"]  , forKey: "position")
             thisPerson.setValue(person["image"]     , forKey: "imagePath")
             thisPerson.setValue(nil                 , forKey: "image")
-            
-            context.save(nil)
+        
             println(thisPerson)
             
         }
+        saveData()
     }
+    
+
+    
+
     
     func getFilePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
@@ -241,6 +234,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return docDir
         
     }
+    
+    func getSmallImagefromBigImage(image: UIImage) -> UIImage{
+        
+        UIGraphicsBeginImageContext(CGSizeMake(40.0, 40.0))
+        
+        image.drawInRect(CGRectMake(0.0, 0.0, 40.0, 40.0))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+
+    }
+    
+
 
 
 

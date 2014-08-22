@@ -96,9 +96,11 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
     //MARK: Other
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
-        firstNameField.resignFirstResponder()
-        lastNameField.resignFirstResponder()
-
+        if firstNameField.isFirstResponder(){
+            firstNameField.resignFirstResponder()
+        } else if lastNameField.isFirstResponder(){
+            lastNameField.resignFirstResponder()
+        }
     }
     
 }
