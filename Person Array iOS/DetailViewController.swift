@@ -25,8 +25,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         nameField.text      = thisPerson.fullName()
         studentLabel.text   = thisPerson.position
   
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let documentsDirectory = paths[0] as String
+        let documentsDirectory = getFilePath()
         let fullPath = documentsDirectory + thisPerson.imagePath
         
         let image = UIImage(contentsOfFile: fullPath)
@@ -34,9 +33,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         if image != nil{
             personImage.image = image
         }
-        
-        
-        
+
         println(fullPath)
         
         self.nameField.delegate = self
@@ -73,18 +70,15 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     //MARK: UIImagePickerControllerDelegate
-    //TODO: Save Context
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
         let image = info["UIImagePickerControllerEditedImage"] as UIImage
         
-        thisPerson.image        = image
         self.personImage.image  = image
         
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let documentsDirectory = paths[0] as String
+        let documentsDirectory = getFilePath() as String
         
         thisPerson.imagePath = "/\(thisPerson.firstName)\(thisPerson.lastName).png"
         let fullPath = documentsDirectory + thisPerson.imagePath
@@ -126,6 +120,13 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         nameField.resignFirstResponder()
     }
     
+    func getFilePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let docDir = paths[0] as String
+        return docDir
+    
+    }
+    
     @IBAction func takePhoto(sender: AnyObject) {
         
         let picker = UIImagePickerController()
@@ -134,19 +135,20 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.allowsEditing = true
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-        
-        var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            picker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker, animated: true, completion: nil)
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            self.presentViewController(picker, animated: true, completion: nil)
-        }))
-        
-        self.presentViewController(actionSheet, animated: true, completion: nil)
+            
+            var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            actionSheet.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                picker.sourceType = UIImagePickerControllerSourceType.Camera
+                self.presentViewController(picker, animated: true, completion: nil)
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+                self.presentViewController(picker, animated: true, completion: nil)
+            }))
+            
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+            
         } else{
             self.presentViewController(picker, animated: true, completion: nil)
         }

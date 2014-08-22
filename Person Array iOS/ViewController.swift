@@ -109,14 +109,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var thisPerson = self.personArray[indexPath.section][indexPath.row] as Person
         cell.textLabel.text = thisPerson.fullName()
         
-//        if thisPerson.image != nil{
-//            let thisImage = thisPerson.image as UIImage!
-//            cell.imageView.image = thisImage
-//        }
-//        else{
-//            cell.imageView.image = UIImage(named: "unknownSilhouette")
-//        }
+        let documentsDirectory = getFilePath()
+        let fullPath = documentsDirectory + thisPerson.imagePath
+        
+        var image = UIImage(contentsOfFile: fullPath)
+        
+        if image == nil{
+            image = UIImage(named: "unknownSilhouette")
+        }
+        
+        UIGraphicsBeginImageContext(CGSizeMake(40.0, 40.0))
+        
+        image.drawInRect(CGRectMake(0.0, 0.0, 40.0, 40.0))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        cell.imageView.image = newImage
 
+        cell.imageView.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
+        cell.imageView.clipsToBounds = true
+        cell.imageView.layer.borderColor = UIColor.blackColor().CGColor
+        cell.imageView.layer.borderWidth = 1
+        
+        cell.imageView.layer.cornerRadius = cell.imageView.frame.size.height / 2.0
         
         return cell
     }
@@ -132,6 +148,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView!, willDisplayHeaderView view: UIView!, forSection section: Int) {
     
+    }
+    
+    func tableView(tableView: UITableView!, willDisplayCell cell: UITableViewCell!, forRowAtIndexPath indexPath: NSIndexPath!) {
+       
     }
     
     
@@ -212,6 +232,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             println(thisPerson)
             
         }
+    }
+    
+    func getFilePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let docDir = paths[0] as String
+        return docDir
+        
     }
 
 
