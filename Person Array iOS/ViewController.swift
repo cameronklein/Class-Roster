@@ -130,6 +130,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    func tableView(tableView: UITableView!, willDisplayHeaderView view: UIView!, forSection section: Int) {
+    
+    }
+    
+    
+    
     //MARK: Other
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
