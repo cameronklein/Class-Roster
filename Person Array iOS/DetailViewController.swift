@@ -168,6 +168,16 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         UIView.animateWithDuration(2.0, animations: { () -> Void in
             self.cameraButton.alpha = 1.0
         })
+    
+        
+        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 4.0,
+            initialSpringVelocity: 1.0,
+            options: 0,
+            animations: { () -> Void in
+                self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2.0, 2.0)
+            }), completion: { (Bool) -> Void in
+                println("Hello.")
+        }
     }
 
     
