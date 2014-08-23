@@ -303,6 +303,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="didTouchButton:" destination="IpY-cG-aL4" eventType="touchDown" id="Biv-5b-G1W"/>
                                     <action selector="takePhoto:" destination="IpY-cG-aL4" eventType="touchUpInside" id="Mh3-2Z-cor"/>
                                 </connections>
                             </button>

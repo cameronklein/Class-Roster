@@ -107,7 +107,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                 println("write failure: \(error.localizedDescription)")
             }
         }
-    
         
     }
     
@@ -169,26 +168,35 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    @IBAction func didTouchButton(sender: AnyObject) {
+        
+        cameraButton.alpha = 1.0
+    }
     func animateImage(){
 //        var full = CGFloat(M_PI)
 //        UIView.animateWithDuration(2.0, animations: { () -> Void in
 //            self.cameraButton.alpha = 1.0
 //        })
-    
+
         UIView.animateWithDuration(1.0,
             delay: 1.0,
             usingSpringWithDamping: 0.2,
             initialSpringVelocity: 6.0,
-            options: nil,
+            options: UIViewAnimationOptions.AllowUserInteraction,
             animations: { () -> Void in
                 self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)
             },
             completion: { (Bool) -> Void in
-                UIView.animateWithDuration(10.0, animations: { () -> Void in
-                                self.cameraButton.alpha = 0.3
-                })
+                UIView.animateWithDuration(0.8,
+                    delay: 1.2,
+                    options: UIViewAnimationOptions.AllowUserInteraction,
+                    animations: { () -> Void in
+                                self.cameraButton.alpha = 0.5
+                },
+                    completion: nil)
 
 
             })
     }
+    
 }
