@@ -15,8 +15,11 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
+    
+    var cameraButtonSize : CGRect!
 
     @IBOutlet weak var cameraButton: UIButton!
+    
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
@@ -34,7 +37,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             personImage.image = image
         }
         
-        self.cameraButton.alpha = 0.0
+        UIView.animateWithDuration(0.0, animations: { () -> Void in
+            self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
+        })
+
         
         self.nameField.delegate = self
         
@@ -164,21 +170,25 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func animateImage(){
-        var full = CGFloat(M_PI)
-        UIView.animateWithDuration(2.0, animations: { () -> Void in
-            self.cameraButton.alpha = 1.0
-        })
+//        var full = CGFloat(M_PI)
+//        UIView.animateWithDuration(2.0, animations: { () -> Void in
+//            self.cameraButton.alpha = 1.0
+//        })
     
-        
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 4.0,
-            initialSpringVelocity: 1.0,
-            options: 0,
+        UIView.animateWithDuration(1.0,
+            delay: 1.0,
+            usingSpringWithDamping: 0.2,
+            initialSpringVelocity: 6.0,
+            options: nil,
             animations: { () -> Void in
-                self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2.0, 2.0)
-            }), completion: { (Bool) -> Void in
-                println("Hello.")
-        }
-    }
+                self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)
+            },
+            completion: { (Bool) -> Void in
+                UIView.animateWithDuration(10.0, animations: { () -> Void in
+                                self.cameraButton.alpha = 0.3
+                })
 
-    
+
+            })
+    }
 }
