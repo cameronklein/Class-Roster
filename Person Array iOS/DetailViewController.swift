@@ -15,8 +15,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
-    
-    var cameraButtonSize : CGRect!
 
     @IBOutlet weak var cameraButton: UIButton!
     
@@ -31,7 +29,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
   
         let path = getFilePath() + thisPerson.imagePath
         
-        let image = UIImage(contentsOfFile: path)
+        let image: UIImage? = UIImage(contentsOfFile: path)
             
         if image != nil{
             personImage.image = image

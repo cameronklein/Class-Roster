@@ -115,13 +115,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let path = getFilePath() + thisPerson.imagePath
         
-        var image = UIImage(contentsOfFile: path)
+        var image: UIImage? = UIImage(contentsOfFile: path)
         
         if image == nil{
             image = UIImage(named: "unknownSilhouette")
         }
         
-        cell.imageView.image = getSmallImagefromBigImage(image)
+        cell.imageView.image = getSmallImagefromBigImage(image!)
     
 
         cell.imageView.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
