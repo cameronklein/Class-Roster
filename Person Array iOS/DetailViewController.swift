@@ -15,10 +15,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var personImage  :   UIImageView!
     @IBOutlet weak var nameField    :   UITextField!
     @IBOutlet weak var studentLabel :   UILabel!
-
-    @IBOutlet weak var cameraButton: UIButton!
-    
+    @IBOutlet weak var cameraButton :   UIButton!
     @IBOutlet weak var gitHubUserNameField: UITextField!
+    
+    var imageDownloadQueue = NSOperationQueue()
     
     
     //MARK: Lifecycle Methods
@@ -29,13 +29,11 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         nameField.text              = thisPerson.fullName()
         studentLabel.text           = thisPerson.position
-  
-        let path = getFilePath() + thisPerson.imagePath
         
-        let image: UIImage? = UIImage(contentsOfFile: path)
-            
+        let image = thisPerson.image
+        
         if image != nil{
-            personImage.image = image
+            personImage.image = UIImage(data: image)
         }
         
         if thisPerson.gitHubUserName != nil{
@@ -52,6 +50,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         personImage.clipsToBounds = true
         personImage.layer.borderColor = UIColor.blackColor().CGColor
         personImage.layer.borderWidth = 2
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil);
+
         
     }
     
@@ -91,32 +93,24 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let image = info["UIImagePickerControllerEditedImage"] as UIImage
         
         self.personImage.image  = image
+        self.thisPerson.image = UIImagePNGRepresentation(image)
         
         picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        thisPerson.imagePath = "/\(thisPerson.firstName)\(thisPerson.lastName).png"
-        let fullPath = getFilePath() + thisPerson.imagePath
-    
-        println(fullPath)
-        
-        if UIImagePNGRepresentation(image).writeToFile(fullPath, atomically: true){
-            println("Image Saved")
-         }
-        
-        var writeError: NSError?
-        let written = UIImagePNGRepresentation(image).writeToFile(fullPath, options: nil,
-            error: &writeError)
-    
-        if !written {
-            if let error = writeError {
-                println("write failure: \(error.localizedDescription)")
-            }
-        }
         
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: Keyboard Notification Methods
+    
+    func keyboardWillShow(){
+        println("Keyboard Will Show")
+    }
+    
+    func keyboardWillHide(){
+        println("Keyboard Will Hide")
     }
     
     //MARK: UITextFieldDelegate
@@ -181,11 +175,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         cameraButton.alpha = 1.0
     }
+    
+    
     func animateImage(){
-//        var full = CGFloat(M_PI)
-//        UIView.animateWithDuration(2.0, animations: { () -> Void in
-//            self.cameraButton.alpha = 1.0
-//        })
 
         UIView.animateWithDuration(1.0,
             delay: 1.0,
@@ -239,7 +231,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func updateImageFromGitHubUserName(username: String){
         
+        let url = NSURL(string: "https://api.github.com/users/" + username)
+        
+        let request = NSURLRequest(URL: url)
     
+        
+
     }
     
     

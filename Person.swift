@@ -18,7 +18,7 @@ class Person: NSManagedObject {
     @NSManaged var position             :   String?
     @NSManaged var gitHubUserName       :   String?
     
-    var image                           :   UIImage?
+    @NSManaged var image                :   NSData?
     
     //MARK: Initializers
     

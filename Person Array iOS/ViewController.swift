@@ -91,8 +91,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         println(thisPerson.fullName() + "deleted.")
     }
     
-    
-    
     // MARK: UITableView Data Source / Delegate
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
@@ -113,9 +111,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var thisPerson = self.personArray[indexPath.section][indexPath.row] as Person
         cell.textLabel.text = thisPerson.fullName()
         
-        let path = getFilePath() + thisPerson.imagePath
-        
-        var image: UIImage? = UIImage(contentsOfFile: path)
+        var image : UIImage? = UIImage(data: thisPerson.image)
         
         if image == nil{
             image = UIImage(named: "unknownSilhouette")
@@ -224,10 +220,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         saveData()
     }
     
-
-    
-
-    
     func getFilePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let docDir = paths[0] as String
@@ -247,11 +239,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return newImage
 
     }
-    
-
-
-
-
 
 }
 
