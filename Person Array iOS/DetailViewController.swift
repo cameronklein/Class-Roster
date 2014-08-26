@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSURLConnectionDataDelegate {
     
     var thisPerson : Person!
     
@@ -17,15 +17,15 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var studentLabel :   UILabel!
     @IBOutlet weak var cameraButton :   UIButton!
     @IBOutlet weak var gitHubUserNameField: UITextField!
+    @IBOutlet weak var spinningWheel: UIActivityIndicatorView!
+
     
     var imageDownloadQueue = NSOperationQueue()
-    
-    
+
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
-        
-        updateImageFromGitHubUserName("cameronklein")
+
         super.viewDidLoad()
         
         nameField.text              = thisPerson.fullName()
@@ -54,13 +54,22 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil);
-
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        animateImage()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        animateImage()
+        
+        if thisPerson.image == nil && thisPerson.gitHubUserName != nil{
+            updateImageFromGitHubUserName(thisPerson.gitHubUserName!)
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -234,27 +243,65 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         println(username)
         var url = NSURL(string: "https://api.github.com/users/" + username)
-        let request = NSMutableURLRequest(URL: url)
         
-        request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+        personImage.alpha = 0
+        spinningWheel.startAnimating()
+        self.imageDownloadQueue.addOperationWithBlock { () -> Void in
+            
+            if let data = NSData(contentsOfURL: url) as NSData?{
+            
+            var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+            
+            let avatarURLString: String = dictionary["avatar_url"]! as String
+            
+            let avatarURL = NSURL(string: avatarURLString)
+            
+            let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
+            
+            self.thisPerson.image = userAvatar
+            
+            let avatarImage = UIImage(data: userAvatar)
+
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.personImage.image = avatarImage
+                self.personImage.alpha = 1.0
+                self.spinningWheel.stopAnimating()
+            })
+            
+            } else {
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.personImage.image = UIImage(named: "unknownSilhouette")
+                    self.personImage.alpha = 1.0
+                    self.spinningWheel.stopAnimating()
+                })
+            }
+        }
         
+        
+        
+        
+        
+
+//        
+//        let request = NSMutableURLRequest(URL: url)
+//        
+//        request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+//        
 //        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
 //            println("Data Retrieved")
 //            println(response)
-//            println(error)
+//            println(NSString(data: data, encoding: NSUTF8StringEncoding))
 //            
 //        }
-        
-        let connection = NSURLConnection(request: request, delegate:nil, startImmediately: true)
-        
-        
-        
-        //task.resume()
+//        
+//        task.resume()
     
         
 
-    }
     
     
+}
 }
     
