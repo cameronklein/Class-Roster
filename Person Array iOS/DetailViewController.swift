@@ -19,10 +19,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var cameraButton         :   UIButton!
     @IBOutlet weak var gitHubUserNameField  :   UITextField!
     @IBOutlet weak var spinningWheel        :   UIActivityIndicatorView!
-
-    @IBAction func usernamechanged(sender: AnyObject) {
-        self.updateImageFromGitHubUserName(gitHubUserNameField.text)
-    }
     
 
 
@@ -99,6 +95,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         personImage.layer.cornerRadius = self.personImage.frame.size.width / 2;
     }
     
+    
+    
+    
     //MARK: UIImagePickerControllerDelegate
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
@@ -115,6 +114,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    
+    
     //MARK: Keyboard Notification Methods
     
     func keyboardWillShow(){
@@ -128,6 +130,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.view.bounds.origin.y = 0
         }
     }
+    
+    
+    
     
     //MARK: UITextFieldDelegate
     
@@ -156,6 +161,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         }
     }
+    
+    
+    
     
     
     //MARK: Other
@@ -264,66 +272,78 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         personImage.alpha = 0
         spinningWheel.startAnimating()
+        var statusCode: Int = 0
         
-        self.imageDownloadQueue.addOperationWithBlock { () -> Void in
+            let request = NSMutableURLRequest(URL: url)
             
-//            let request = NSMutableURLRequest(URL: url)
-//            
-//            //request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
-//            
-//            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
-//                println("Data Retrieved")
-//                println(response)
-//                println(NSString(data: data, encoding: NSUTF8StringEncoding))
-//                
-//            }
+            //request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+        
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
+                println("Data Retrieved")
+                //println("RESPONSE: " + response)
+                
+                let thisResponse = response as NSHTTPURLResponse
+                statusCode = thisResponse.statusCode
+                
+                println(statusCode)
+                switch statusCode{
+                    
+                case 200:
+                    var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                    
+                    let avatarURLString: String = dictionary["avatar_url"]! as String
+                    
+                    let avatarURL = NSURL(string: avatarURLString)
+                    
+                    let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
+                    
+                    self.thisPerson.image = userAvatar
+                    
+                    let avatarImage = UIImage(data: userAvatar)
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        self.personImage.image = avatarImage
+                        self.personImage.alpha = 1.0
+                        self.spinningWheel.stopAnimating()
+                    })
+                    
+                case 403,404:
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        
+                        self.personImage.image = UIImage(named: "unknownSilhouette")
+                        self.personImage.alpha = 1.0
+                        self.spinningWheel.stopAnimating()
+                        
+                        var alert = UIAlertController(title: "", message: "API Limit Reached", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                            
+                        }))
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        
+                        
+                    })
+                    
+                default:
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        
+                        println("Oops!")
+                        
+                        self.personImage.image = UIImage(named: "unknownSilhouette")
+                        self.personImage.alpha = 1.0
+                        self.spinningWheel.stopAnimating()
+                    })
+                    
+                }
+                
+            }
             
             task.resume()
-            
-            if let data = NSData(contentsOfURL: url) as NSData?{
-            
-                var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-                
-                println(dictionary)
-                
-                let message : String = dictionary["message"]! as String
-                
-                let avatarURLString: String = dictionary["avatar_url"]! as String
-                
-                let avatarURL = NSURL(string: avatarURLString)
-                
-                let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
-                
-                self.thisPerson.image = userAvatar
-                
-                let avatarImage = UIImage(data: userAvatar)
-
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.personImage.image = avatarImage
-                    self.personImage.alpha = 1.0
-                    self.spinningWheel.stopAnimating()
-                })
-                
-            } else {
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    
-                    
-                    self.personImage.image = UIImage(named: "unknownSilhouette")
-                    self.personImage.alpha = 1.0
-                    self.spinningWheel.stopAnimating()
-                })
-            }
+        
         }
-        
-
-        
-    
-        
-
-    
-    
 }
-}
+
     
