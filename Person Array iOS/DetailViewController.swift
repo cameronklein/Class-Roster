@@ -25,6 +25,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         
+        updateImageFromGitHubUserName("cameronklein")
         super.viewDidLoad()
         
         nameField.text              = thisPerson.fullName()
@@ -231,9 +232,24 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func updateImageFromGitHubUserName(username: String){
         
-        let url = NSURL(string: "https://api.github.com/users/" + username)
+        println(username)
+        var url = NSURL(string: "https://api.github.com/users/" + username)
+        let request = NSMutableURLRequest(URL: url)
         
-        let request = NSURLRequest(URL: url)
+        request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+        
+//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
+//            println("Data Retrieved")
+//            println(response)
+//            println(error)
+//            
+//        }
+        
+        let connection = NSURLConnection(request: request, delegate:nil, startImmediately: true)
+        
+        
+        
+        //task.resume()
     
         
 
