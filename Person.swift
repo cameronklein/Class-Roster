@@ -12,12 +12,13 @@ import CoreData
 @objc(Person)
 class Person: NSManagedObject {
     
-    @NSManaged var firstName    :   String
-    @NSManaged var lastName     :   String
-    @NSManaged var imagePath    :   String
-    @NSManaged var position     :   String?
+    @NSManaged var firstName            :   String
+    @NSManaged var lastName             :   String
+    @NSManaged var imagePath            :   String
+    @NSManaged var position             :   String?
+    @NSManaged var gitHubUserName       :   String?
     
-    var image       :   UIImage?
+    var image                           :   UIImage?
     
     //MARK: Initializers
     

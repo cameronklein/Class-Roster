@@ -18,14 +18,17 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBOutlet weak var cameraButton: UIButton!
     
+    @IBOutlet weak var gitHubUserNameField: UITextField!
+    
+    
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        nameField.text      = thisPerson.fullName()
-        studentLabel.text   = thisPerson.position
+        nameField.text              = thisPerson.fullName()
+        studentLabel.text           = thisPerson.position
   
         let path = getFilePath() + thisPerson.imagePath
         
@@ -33,6 +36,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         if image != nil{
             personImage.image = image
+        }
+        
+        if thisPerson.gitHubUserName != nil{
+            gitHubUserNameField.text = thisPerson.gitHubUserName
         }
         
         UIView.animateWithDuration(0.0, animations: { () -> Void in
@@ -140,31 +147,35 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.delegate = self
         picker.allowsEditing = true
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+        
             
             var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             
             actionSheet.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 picker.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(picker, animated: true, completion: nil)
             }))
-            
+        }
+        
             actionSheet.addAction(UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
                 self.presentViewController(picker, animated: true, completion: nil)
             }))
-            
+        
+            actionSheet.addAction(UIAlertAction(title: "Import from GitHub", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                self.askForGithubUserName()
+            }))
+        
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
                 picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
                 actionSheet.dismissViewControllerAnimated(true, completion: nil)
             }))
             
             self.presentViewController(actionSheet, animated: true, completion: nil)
-            
-        } else{
-            self.presentViewController(picker, animated: true, completion: nil)
+        
         }
-    }
     
     @IBAction func didTouchButton(sender: AnyObject) {
         
@@ -197,4 +208,40 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             })
     }
     
+    func askForGithubUserName(){
+        
+        var alert = UIAlertController(title: "Enter GitHub Username", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addTextFieldWithConfigurationHandler({textField in
+            textField.placeholder = "Username"
+            textField.secureTextEntry = false
+        })
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {action in
+            println("Confirm was tapped")
+            let textField = alert.textFields[0] as UITextField
+            let username = textField.text as String
+            println(username)
+            self.thisPerson.gitHubUserName = username
+            self.updateImageFromGitHubUserName(username)
+            self.gitHubUserNameField.text = username
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel , handler: {action in
+            println("Cancel was tapped.")
+        }))
+        
+        self.presentViewController(alert, animated: true, nil)
+        
+    }
+    
+    
+    func updateImageFromGitHubUserName(username: String){
+        
+    
+    }
+    
+    
 }
+    
