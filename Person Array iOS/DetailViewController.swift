@@ -11,16 +11,20 @@ import UIKit
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSURLConnectionDataDelegate {
     
     var thisPerson : Person!
-    
-    @IBOutlet weak var personImage  :   UIImageView!
-    @IBOutlet weak var nameField    :   UITextField!
-    @IBOutlet weak var studentLabel :   UILabel!
-    @IBOutlet weak var cameraButton :   UIButton!
-    @IBOutlet weak var gitHubUserNameField: UITextField!
-    @IBOutlet weak var spinningWheel: UIActivityIndicatorView!
-
-    
     var imageDownloadQueue = NSOperationQueue()
+    
+    @IBOutlet weak var personImage          :   UIImageView!
+    @IBOutlet weak var nameField            :   UITextField!
+    @IBOutlet weak var studentLabel         :   UILabel!
+    @IBOutlet weak var cameraButton         :   UIButton!
+    @IBOutlet weak var gitHubUserNameField  :   UITextField!
+    @IBOutlet weak var spinningWheel        :   UIActivityIndicatorView!
+
+    @IBAction func usernamechanged(sender: AnyObject) {
+        self.updateImageFromGitHubUserName(gitHubUserNameField.text)
+    }
+    
+
 
     //MARK: Lifecycle Methods
     
@@ -30,15 +34,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         nameField.text              = thisPerson.fullName()
         studentLabel.text           = thisPerson.position
+        gitHubUserNameField.text    = thisPerson.gitHubUserName
         
         let image = thisPerson.image
         
         if image != nil{
             personImage.image = UIImage(data: image)
-        }
-        
-        if thisPerson.gitHubUserName != nil{
-            gitHubUserNameField.text = thisPerson.gitHubUserName
         }
         
         UIView.animateWithDuration(0.0, animations: { () -> Void in
@@ -47,6 +48,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
 
         
         self.nameField.delegate = self
+        self.gitHubUserNameField.delegate = self
         
         personImage.clipsToBounds = true
         personImage.layer.borderColor = UIColor.blackColor().CGColor
@@ -116,11 +118,15 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     //MARK: Keyboard Notification Methods
     
     func keyboardWillShow(){
-        println("Keyboard Will Show")
+        if gitHubUserNameField.isFirstResponder(){
+            self.view.bounds.origin.y = self.view.frame.height / 3.5
+        }
     }
     
     func keyboardWillHide(){
-        println("Keyboard Will Hide")
+        if gitHubUserNameField.isFirstResponder(){
+            self.view.bounds.origin.y = 0
+        }
     }
     
     //MARK: UITextFieldDelegate
@@ -131,17 +137,32 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         return true
     }
     
+    func textFieldDidEndEditing(textField: UITextField!) {
+        println("Did End Editing")
+        if textField == gitHubUserNameField{
+            thisPerson.gitHubUserName = textField.text
+            
+            var alert = UIAlertController(title: "", message: "Download image from GitHub?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                self.updateImageFromGitHubUserName(textField.text)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    
     //MARK: Other
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
         nameField.resignFirstResponder()
-    }
-    
-    func getFilePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let docDir = paths[0] as String
-        return docDir
-    
+        gitHubUserNameField.resignFirstResponder()
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -151,9 +172,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.delegate = self
         picker.allowsEditing = true
         
-        
-            
-            var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        var actionSheet = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             
@@ -185,7 +204,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         cameraButton.alpha = 1.0
     }
-    
     
     func animateImage(){
 
@@ -246,32 +264,52 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         personImage.alpha = 0
         spinningWheel.startAnimating()
+        
         self.imageDownloadQueue.addOperationWithBlock { () -> Void in
+            
+//            let request = NSMutableURLRequest(URL: url)
+//            
+//            //request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+//            
+//            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
+//                println("Data Retrieved")
+//                println(response)
+//                println(NSString(data: data, encoding: NSUTF8StringEncoding))
+//                
+//            }
+            
+            task.resume()
             
             if let data = NSData(contentsOfURL: url) as NSData?{
             
-            var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            
-            let avatarURLString: String = dictionary["avatar_url"]! as String
-            
-            let avatarURL = NSURL(string: avatarURLString)
-            
-            let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
-            
-            self.thisPerson.image = userAvatar
-            
-            let avatarImage = UIImage(data: userAvatar)
+                var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                
+                println(dictionary)
+                
+                let message : String = dictionary["message"]! as String
+                
+                let avatarURLString: String = dictionary["avatar_url"]! as String
+                
+                let avatarURL = NSURL(string: avatarURLString)
+                
+                let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
+                
+                self.thisPerson.image = userAvatar
+                
+                let avatarImage = UIImage(data: userAvatar)
 
-            
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                self.personImage.image = avatarImage
-                self.personImage.alpha = 1.0
-                self.spinningWheel.stopAnimating()
-            })
-            
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.personImage.image = avatarImage
+                    self.personImage.alpha = 1.0
+                    self.spinningWheel.stopAnimating()
+                })
+                
             } else {
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    
+                    
                     self.personImage.image = UIImage(named: "unknownSilhouette")
                     self.personImage.alpha = 1.0
                     self.spinningWheel.stopAnimating()
@@ -279,24 +317,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
         }
         
-        
-        
-        
-        
 
-//        
-//        let request = NSMutableURLRequest(URL: url)
-//        
-//        request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
-//            println("Data Retrieved")
-//            println(response)
-//            println(NSString(data: data, encoding: NSUTF8StringEncoding))
-//            
-//        }
-//        
-//        task.resume()
+        
     
         
 

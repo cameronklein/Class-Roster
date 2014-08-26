@@ -343,6 +343,9 @@
                                         <include reference="XrK-zC-Nfg"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="usernamechanged:" destination="IpY-cG-aL4" eventType="editingChanged" id="k3w-bB-D47"/>
+                                </connections>
                             </textField>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="GQt-TJ-EXd">
                                 <rect key="frame" x="282" y="298" width="37" height="37"/>
