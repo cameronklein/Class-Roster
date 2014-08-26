@@ -14,7 +14,6 @@ class Person: NSManagedObject {
     
     @NSManaged var firstName            :   String
     @NSManaged var lastName             :   String
-    @NSManaged var imagePath            :   String
     @NSManaged var position             :   String?
     @NSManaged var gitHubUserName       :   String?
     
@@ -47,11 +46,10 @@ class Person: NSManagedObject {
         }
     }
     
-    convenience init(firstName: String, lastName: String, imagePath: String, position: String){
+    convenience init(firstName: String, lastName: String, position: String){
         self.init()
         self.firstName  =   firstName
         self.lastName   =   lastName
-        self.imagePath  =   imagePath
         self.position   =   position
     }
     

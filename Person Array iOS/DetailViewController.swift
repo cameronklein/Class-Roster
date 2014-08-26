@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSURLConnectionDataDelegate {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     var thisPerson : Person!
     var imageDownloadQueue = NSOperationQueue()
@@ -20,8 +20,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var gitHubUserNameField  :   UITextField!
     @IBOutlet weak var spinningWheel        :   UIActivityIndicatorView!
     
-
-
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
@@ -31,24 +29,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         nameField.text              = thisPerson.fullName()
         studentLabel.text           = thisPerson.position
         gitHubUserNameField.text    = thisPerson.gitHubUserName
+        personImage.image           = UIImage(data: thisPerson.image)
         
-        let image = thisPerson.image
-        
-        if image != nil{
-            personImage.image = UIImage(data: image)
+        if thisPerson.image == nil{
+            personImage.image = UIImage(named: "unknownSilhouette")
         }
         
-        UIView.animateWithDuration(0.0, animations: { () -> Void in
-            self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
-        })
-
-        
-        self.nameField.delegate = self
-        self.gitHubUserNameField.delegate = self
-        
-        personImage.clipsToBounds = true
-        personImage.layer.borderColor = UIColor.blackColor().CGColor
-        personImage.layer.borderWidth = 2
+        self.nameField.delegate             = self
+        self.gitHubUserNameField.delegate   = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil);
@@ -56,7 +44,16 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
+        
+        UIView.animateWithDuration(0.0, animations: { () -> Void in
+            self.cameraButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
+        })
+        
+        personImage.clipsToBounds = true
+        personImage.layer.borderColor = UIColor.blackColor().CGColor
+        personImage.layer.borderWidth = 2
         
         animateImage()
     }
@@ -78,17 +75,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         super.viewWillDisappear(animated)
         
-        var nameArray = nameField.text.componentsSeparatedByString(" ")
         
-        if nameArray.count < 2{
-            var alert: UIAlertView = UIAlertView()
-            alert.title     = "Name not updated!"
-            alert.message   = "Only one name was provided. Next time, please enter both first and last name."
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        } else {
-            thisPerson.setFullName(nameField.text)
-        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -142,8 +129,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         return true
     }
     
+    
     func textFieldDidEndEditing(textField: UITextField!) {
         println("Did End Editing")
+        
         if textField == gitHubUserNameField{
             thisPerson.gitHubUserName = textField.text
             
@@ -159,12 +148,135 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             self.presentViewController(alert, animated: true, completion: nil)
             
+            gitHubUserNameField.resignFirstResponder()
+            
+        } else if textField == nameField{
+            
+            var nameArray = nameField.text.componentsSeparatedByString(" ")
+            
+            if nameArray.count < 2{
+                var alert: UIAlertView = UIAlertView()
+                alert.title     = "Name not updated!"
+                alert.message   = "Only one name was provided. Please enter both first and last name."
+                alert.addButtonWithTitle("Ok")
+                alert.show()
+                nameField.text = thisPerson.fullName()
+            } else {
+                thisPerson.setFullName(nameField.text)
+            }
+            nameField.resignFirstResponder()
+            
         }
+        
+        
+    }
+    
+    //MARK: GitHub
+    
+    func askForGithubUserName(){
+        
+        var alert = UIAlertController(title: "Enter GitHub Username", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addTextFieldWithConfigurationHandler({textField in
+            textField.placeholder = "Username"
+            textField.secureTextEntry = false
+        })
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {action in
+            let textField = alert.textFields[0] as UITextField
+            let username = textField.text as String
+            println(username)
+            self.thisPerson.gitHubUserName = username
+            self.updateImageFromGitHubUserName(username)
+            self.gitHubUserNameField.text = username
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel , handler: nil))
+        
+        self.presentViewController(alert, animated: true, nil)
+        
     }
     
     
-    
-    
+    func updateImageFromGitHubUserName(username: String){
+        
+        println(username)
+        var url = NSURL(string: "https://api.github.com/users/" + username)
+        
+        personImage.alpha = 0
+        spinningWheel.startAnimating()
+        var statusCode: Int = 0
+        
+        let request = NSMutableURLRequest(URL: url)
+        
+        //request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
+            println("Data Retrieved")
+            
+            let thisResponse = response as NSHTTPURLResponse
+            statusCode = thisResponse.statusCode
+            
+            println("Status Code: \(statusCode)")
+            
+            switch statusCode{
+                
+            case 200:
+                
+                var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                
+                let avatarURLString: String = dictionary["avatar_url"]! as String
+                
+                let avatarURL = NSURL(string: avatarURLString)
+                
+                let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
+                
+                self.thisPerson.image = userAvatar
+                
+                let avatarImage = UIImage(data: userAvatar)
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.personImage.image = avatarImage
+                    self.personImage.alpha = 1.0
+                    self.spinningWheel.stopAnimating()
+                })
+                
+            case 403,404:
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    
+                    self.personImage.image = UIImage(named: "unknownSilhouette")
+                    self.personImage.alpha = 1.0
+                    self.spinningWheel.stopAnimating()
+                    
+                    var alert = UIAlertController(title: "", message: "API Limit Reached", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                })
+                
+            default:
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    
+                    println("Oops!")
+                    
+                    self.personImage.image = UIImage(named: "unknownSilhouette")
+                    self.personImage.alpha = 1.0
+                    self.spinningWheel.stopAnimating()
+                    
+                })
+            }
+        }
+        
+        task.resume()
+        
+    }
     
     //MARK: Other
     
@@ -209,7 +321,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     
     @IBAction func didTouchButton(sender: AnyObject) {
-        
         cameraButton.alpha = 1.0
     }
     
@@ -228,122 +339,13 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                     delay: 1.2,
                     options: UIViewAnimationOptions.AllowUserInteraction,
                     animations: { () -> Void in
-                                self.cameraButton.alpha = 0.5
-                },
-                    completion: nil)
-
-
+                        self.cameraButton.alpha = 0.5
+                },  completion: nil)
+                
             })
     }
     
-    func askForGithubUserName(){
-        
-        var alert = UIAlertController(title: "Enter GitHub Username", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addTextFieldWithConfigurationHandler({textField in
-            textField.placeholder = "Username"
-            textField.secureTextEntry = false
-        })
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {action in
-            println("Confirm was tapped")
-            let textField = alert.textFields[0] as UITextField
-            let username = textField.text as String
-            println(username)
-            self.thisPerson.gitHubUserName = username
-            self.updateImageFromGitHubUserName(username)
-            self.gitHubUserNameField.text = username
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel , handler: {action in
-            println("Cancel was tapped.")
-        }))
-        
-        self.presentViewController(alert, animated: true, nil)
-        
-    }
     
-    
-    func updateImageFromGitHubUserName(username: String){
-        
-        println(username)
-        var url = NSURL(string: "https://api.github.com/users/" + username)
-        
-        personImage.alpha = 0
-        spinningWheel.startAnimating()
-        var statusCode: Int = 0
-        
-            let request = NSMutableURLRequest(URL: url)
-            
-            //request.setValue("token 4bed1fd2237ceb5ea250cbb0d7c15ad630a9876c", forHTTPHeaderField: "Authorization")
-        
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {(data, response, error) in
-                println("Data Retrieved")
-                //println("RESPONSE: " + response)
-                
-                let thisResponse = response as NSHTTPURLResponse
-                statusCode = thisResponse.statusCode
-                
-                println(statusCode)
-                switch statusCode{
-                    
-                case 200:
-                    var dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-                    
-                    let avatarURLString: String = dictionary["avatar_url"]! as String
-                    
-                    let avatarURL = NSURL(string: avatarURLString)
-                    
-                    let userAvatar : NSData = NSData(contentsOfURL: avatarURL)
-                    
-                    self.thisPerson.image = userAvatar
-                    
-                    let avatarImage = UIImage(data: userAvatar)
-                    
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                        self.personImage.image = avatarImage
-                        self.personImage.alpha = 1.0
-                        self.spinningWheel.stopAnimating()
-                    })
-                    
-                case 403,404:
-                    
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                        
-                        self.personImage.image = UIImage(named: "unknownSilhouette")
-                        self.personImage.alpha = 1.0
-                        self.spinningWheel.stopAnimating()
-                        
-                        var alert = UIAlertController(title: "", message: "API Limit Reached", preferredStyle: UIAlertControllerStyle.Alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-                            
-                        }))
-                        
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        
-                        
-                    })
-                    
-                default:
-                    
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                        
-                        println("Oops!")
-                        
-                        self.personImage.image = UIImage(named: "unknownSilhouette")
-                        self.personImage.alpha = 1.0
-                        self.spinningWheel.stopAnimating()
-                    })
-                    
-                }
-                
-            }
-            
-            task.resume()
-        
-        }
 }
 
     

@@ -61,7 +61,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let firstName   =   sourceViewController.firstName
         let lastName    =   sourceViewController.lastName
         let position    =   sourceViewController.position as String
-        let imagePath       =   " "
         
         var context  : NSManagedObjectContext = getContext()
         
@@ -69,7 +68,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         newPerson.firstName     = firstName!
         newPerson.lastName      = lastName!
-        newPerson.imagePath     = imagePath
         newPerson.position      = position
 
         saveData()
@@ -88,7 +86,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let thisPerson : Person = sourceViewController.thisPerson
         var context  : NSManagedObjectContext = getContext()
         context.deleteObject(thisPerson)
-        println(thisPerson.fullName() + "deleted.")
+        println(thisPerson.fullName() + " deleted.")
     }
     
     // MARK: UITableView Data Source / Delegate
@@ -161,6 +159,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    
     //MARK: Other
     
     func initializePersonArray(){
@@ -199,9 +198,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let path = NSBundle.mainBundle().pathForResource("Roster", ofType:"plist")
         let array = NSArray(contentsOfFile:path!)
         
-        var teacherArray = [Person]()
-        var studentArray = [Person]()
-        
         var context  : NSManagedObjectContext =  getContext()
         
         for person in array{
@@ -213,18 +209,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             thisPerson.setValue(person["position"]  , forKey: "position")
             thisPerson.setValue(person["image"]     , forKey: "imagePath")
             thisPerson.setValue(nil                 , forKey: "image")
-        
-            println(thisPerson)
             
         }
-        saveData()
-    }
-    
-    func getFilePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let docDir = paths[0] as String
-        return docDir
+        println("Persons inserted from backup plist")
         
+        saveData()
     }
     
     func getSmallImagefromBigImage(image: UIImage) -> UIImage{
