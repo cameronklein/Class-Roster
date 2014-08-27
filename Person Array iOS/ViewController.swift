@@ -73,7 +73,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         saveData()
         initializePersonArray() 
         
-        println(newPerson.fullName() + "added.")
+        println(newPerson.fullName() + " added.")
         
     }
     
@@ -160,7 +160,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    //MARK: Other
+    //MARK: Array Initialization
     
     func initializePersonArray(){
         
@@ -207,14 +207,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             thisPerson.setValue(person["firstName"] , forKey: "firstName")
             thisPerson.setValue(person["lastName"]  , forKey: "lastName")
             thisPerson.setValue(person["position"]  , forKey: "position")
-            thisPerson.setValue(person["image"]     , forKey: "imagePath")
             thisPerson.setValue(nil                 , forKey: "image")
             
         }
-        println("Persons inserted from backup plist")
+        println("Persons inserted from backup plist.")
         
         saveData()
     }
+    
+    //MARK: Other
     
     func getSmallImagefromBigImage(image: UIImage) -> UIImage{
         

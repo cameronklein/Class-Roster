@@ -84,7 +84,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     
-    
     //MARK: UIImagePickerControllerDelegate
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {

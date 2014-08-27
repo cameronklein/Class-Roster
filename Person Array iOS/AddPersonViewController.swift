@@ -71,12 +71,13 @@ class AddPersonViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
-        if row == 0{
-            position = "Student"
+        
+        switch row{
+        case 0: position = "Student"
+        case 1: position = "Teacher"
+        default: position = "Student"
         }
-        if row == 1{
-            position = "Teacher"
-        }
+        
     }
     
     //MARK: UITextFieldDelegate
