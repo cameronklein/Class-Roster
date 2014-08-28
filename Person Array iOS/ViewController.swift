@@ -212,6 +212,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         println("Persons inserted from backup plist.")
         
+        
+        
         saveData()
     }
     

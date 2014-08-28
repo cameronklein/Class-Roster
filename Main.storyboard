@@ -543,7 +543,7 @@
                                 <exclude reference="eko-z0-tGR"/>
                                 <exclude reference="mkm-HJ-Xfm"/>
                                 <exclude reference="rmM-cT-fgg"/>
-                                <include reference="CeF-eu-P5d"/>
+                                <exclude reference="CeF-eu-P5d"/>
                                 <exclude reference="XXh-Jr-bRN"/>
                                 <exclude reference="t3R-KX-SMt"/>
                                 <exclude reference="VNa-Pb-cS6"/>
